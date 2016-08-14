@@ -2,7 +2,7 @@ Implementation of common algebraic types in JavaScript + Flow based on static-la
 
 - [Specification](https://github.com/rpominov/static-land)
 
-The idea is based on the paper [Lightweight higher-kinded polymorphism][https://www.cl.cam.ac.uk/~jdy22/papers/lightweight-higher-kinded-polymorphism.pdf] and [elm-brands](https://github.com/joneshf/elm-brands).
+The idea is based on the paper [Lightweight higher-kinded polymorphism](https://www.cl.cam.ac.uk/~jdy22/papers/lightweight-higher-kinded-polymorphism.pdf) and [elm-brands](https://github.com/joneshf/elm-brands).
 
 # Usage
 
