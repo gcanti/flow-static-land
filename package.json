@@ -1,0 +1,33 @@
+{
+  "name": "flow-static-land",
+  "version": "0.1.0",
+  "description": "Implementation of common algebraic types in JavaScript + Flow based on static-land",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gcanti/flow-static-land.git"
+  },
+  "author": "Giulio Canti <giulio.canti@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gcanti/flow-static-land/issues"
+  },
+  "homepage": "https://github.com/gcanti/flow-static-land",
+  "devDependencies": {
+  },
+  "tags": [
+    "flow",
+    "flowtype",
+    "static-land",
+    "algebraic types",
+    "functional programming"
+  ],
+  "keywords": [
+    "flow",
+    "flowtype",
+    "static-land",
+    "algebraic types",
+    "functional programming"
+  ]
+}
