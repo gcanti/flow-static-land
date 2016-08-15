@@ -20,9 +20,7 @@ export function map<A, B>(f: (a: A) => B, fa: HKT<List, A>): HKT<List, B> {
 }
 
 export function ap<A, B>(fab: HKT<List, (a: A) => B>, fa: HKT<List, A>): HKT<List, B> {
-  const ab = prj(fab)
-  const a = prj(fa)
-  return inj(ab.reduce((acc, f) => acc.concat(a.map(f)), []))
+  return inj(prj(fab).reduce((acc, f) => acc.concat(prj(fa).map(f)), []))
 }
 
 export function of<A>(a: A): HKT<List, A> {
@@ -30,13 +28,11 @@ export function of<A>(a: A): HKT<List, A> {
 }
 
 export function chain<A, B>(f: (a: A) => HKT<List, B>, fa: HKT<List, A>): HKT<List, B> {
-  const a = prj(fa)
-  return inj(a.map(f).reduce((acc, fb) => acc.concat(prj(fb)), []))
+  return inj(prj(fa).reduce((acc, a) => acc.concat(prj(f(a))), []))
 }
 
 export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: HKT<List, B>): A {
-  const b = prj(fb)
-  return b.reduce(f, a)
+  return prj(fb).reduce(f, a)
 }
 
 if (false) { // eslint-disable-line
