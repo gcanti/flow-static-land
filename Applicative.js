@@ -2,10 +2,10 @@
 import { HKT } from './HKT'
 import type { Apply } from './Apply'
 
-export interface Applicative<F, A, B> extends Apply<F, A, B> {
-  of(a: A): HKT<F, A>
+export interface Applicative<F> extends Apply<F> {
+  of<A>(a: A): HKT<F, A>
 }
 
-export function of<F, A, B>(applicative: Applicative<F, A, B>, a: A): HKT<F, A> {
-  return applicative.of(a)
+export function of<F, A>(dictApplicative: Applicative<F>, a: A): HKT<F, A> {
+  return dictApplicative.of(a)
 }

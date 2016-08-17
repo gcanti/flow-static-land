@@ -5,6 +5,6 @@ export interface Monoid<S> extends Semigroup<S> {
   empty(): S
 }
 
-export function concat<S>(semigroup: Semigroup<S>, a: S, b: S): S {
-  return semigroup.concat(a, b)
+export function concat<S>(dictSemigroup: Semigroup<S>, a: S, b: S): S {
+  return dictSemigroup.concat(a, b)
 }

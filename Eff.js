@@ -47,5 +47,5 @@ if (false) { // eslint-disable-line
     ap,
     of,
     chain
-  }: Monad<HKT<Eff, *>, *, *>)
+  }: Monad<HKT<Eff, *>>)
 }

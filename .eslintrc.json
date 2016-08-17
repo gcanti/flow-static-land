@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended"],
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "flow-vars"
+  ],
+  "rules": {
+    "semi": [2, "never"],
+    "flow-vars/define-flow-type": 1,
+    "flow-vars/use-flow-type": 1
+  }
+}

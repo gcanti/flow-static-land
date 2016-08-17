@@ -2,8 +2,7 @@
   "name": "flow-static-land",
   "version": "0.1.0",
   "description": "Implementation of common algebraic types in JavaScript + Flow based on static-land",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/gcanti/flow-static-land.git"
@@ -15,6 +14,9 @@
   },
   "homepage": "https://github.com/gcanti/flow-static-land",
   "devDependencies": {
+    "babel-eslint": "^6.1.2",
+    "eslint": "^2.12.0",
+    "eslint-plugin-flow-vars": "^0.4.0"
   },
   "tags": [
     "flow",
