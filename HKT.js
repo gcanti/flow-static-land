@@ -1,5 +1,5 @@
 // @flow
 export class HKT<F, A> {}
 
-export class HKT2<F, A, B> {}
+export type HKT2<F, A, B> = HKT<HKT<F, A>, B>;
 

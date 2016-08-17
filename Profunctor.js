@@ -1,5 +1,5 @@
 // @flow
-import { HKT2 } from './HKT'
+import type { HKT2 } from './HKT'
 import type { Functor } from './Functor'
 
 export interface Profunctor<F, A, B, C, D> extends Functor<F, C, D> {
