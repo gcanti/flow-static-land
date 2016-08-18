@@ -83,5 +83,5 @@ if (false) { // eslint-disable-line
     reduce,
     alt,
     pempty
-  }: Monoid<HKT<Arr, *>> & Monad<Arr> & Foldable<Arr> & Alt<Arr> & Plus<Arr, *> & Alternative<Arr, *>)
+  }: Monoid<HKT<Arr, *>> & Monad<Arr> & Foldable<Arr> & Alt<Arr> & Plus<Arr> & Alternative<Arr>)
 }

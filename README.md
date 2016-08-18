@@ -1,4 +1,4 @@
-Implementation of common algebraic types in JavaScript + Flow based on static-land
+Static land compatible
 
 - [Specification](https://github.com/rpominov/static-land)
 
