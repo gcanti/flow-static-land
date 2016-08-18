@@ -10,40 +10,42 @@ import type { Alternative } from './Alternative'
 import type { Extend } from './Extend'
 import type { Setoid } from './Setoid'
 
-class Maybe {}
+class IsMaybe {}
+
+export type Maybe<A> = HKT<IsMaybe, A>;
 
 // keep private
-function prj<A>(fa: HKT<Maybe, A>): A {
+function prj<A>(fa: Maybe<A>): A {
   return ((fa: any): A)
 }
 
 // keep private
-function inj<A>(a: A): HKT<Maybe, A> {
-  return ((a: any): HKT<Maybe, A>)
+function inj<A>(a: A): Maybe<A> {
+  return ((a: any): Maybe<A>)
 }
 
-export function isNothing<A>(x: HKT<Maybe, A>): boolean {
+export function isNothing<A>(x: Maybe<A>): boolean {
   return x == Nothing
 }
 
-export function isJust<A>(x: HKT<Maybe, A>): boolean {
+export function isJust<A>(x: Maybe<A>): boolean {
   return x != Nothing
 }
 
-export function empty<A>(): HKT<Maybe, A> {
+export function empty<A>(): Maybe<A> {
   return Nothing
 }
 
 export const pempty = empty
 
-export function concat<A>(dictSemigroup: Semigroup<A>, a: HKT<Maybe, A>, b: HKT<Maybe, A>): HKT<Maybe, A> {
+export function concat<A>(dictSemigroup: Semigroup<A>, a: Maybe<A>, b: Maybe<A>): Maybe<A> {
   if (isNothing(a) || isNothing(b)) {
     return Nothing
   }
   return inj(dictSemigroup.concat(prj(a), prj(b)))
 }
 
-export function getMonoid<A>(dictSemigroup: Semigroup<A>): Monoid<HKT<Maybe, A>> {
+export function getMonoid<A>(dictSemigroup: Semigroup<A>): Monoid<Maybe<A>> {
   return {
     empty,
     concat(a, b) {
@@ -52,37 +54,37 @@ export function getMonoid<A>(dictSemigroup: Semigroup<A>): Monoid<HKT<Maybe, A>>
   }
 }
 
-export function map<A, B>(f: (a: A) => B, fa: HKT<Maybe, A>): HKT<Maybe, B> {
+export function map<A, B>(f: (a: A) => B, fa: Maybe<A>): Maybe<B> {
   return isNothing(fa) ? Nothing : inj(f(prj(fa)))
 }
 
-export function ap<A, B>(fab: HKT<Maybe, (a: A) => B>, fa: HKT<Maybe, A>): HKT<Maybe, B> {
+export function ap<A, B>(fab: Maybe<(a: A) => B>, fa: Maybe<A>): Maybe<B> {
   return isNothing(fab) ? Nothing : map(prj(fab), fa)
 }
 
-export function of<A>(a: A): HKT<Maybe, A> {
+export function of<A>(a: A): Maybe<A> {
   return inj(a)
 }
 
-export function chain<A, B>(f: (a: A) => HKT<Maybe, B>, fa: HKT<Maybe, A>): HKT<Maybe, B> {
+export function chain<A, B>(f: (a: A) => Maybe<B>, fa: Maybe<A>): Maybe<B> {
   return isNothing(fa) ? Nothing : f(prj(fa))
 }
 
-export const Nothing: HKT<Maybe, any> = inj(null)
+export const Nothing: Maybe<any> = inj(null)
 
-export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: HKT<Maybe, B>): A {
+export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Maybe<B>): A {
   return isNothing(fb) ? a : f(a, prj(fb))
 }
 
-export function alt<A>(fx: HKT<Maybe, A>, fy: HKT<Maybe, A>): HKT<Maybe, A> {
+export function alt<A>(fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {
   return fx == Nothing ? fy : fx
 }
 
-export function extend<A, B>(f: (ea: HKT<Maybe, A>) => B, ea: HKT<Maybe, A>): HKT<Maybe, B> {
+export function extend<A, B>(f: (ea: Maybe<A>) => B, ea: Maybe<A>): Maybe<B> {
   return isNothing(ea) ? Nothing : inj(f(ea))
 }
 
-export function equals<A>(dictSetoid: Setoid<A>, fx: HKT<Maybe, A>, fy: HKT<Maybe, A>): boolean {
+export function equals<A>(dictSetoid: Setoid<A>, fx: Maybe<A>, fy: Maybe<A>): boolean {
   if (isNothing(fx) && isNothing(fy)) {
     return true
   }
@@ -92,7 +94,7 @@ export function equals<A>(dictSetoid: Setoid<A>, fx: HKT<Maybe, A>, fy: HKT<Mayb
   return false
 }
 
-export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<HKT<Maybe, A>> {
+export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<Maybe<A>> {
   return {
     equals(fx, fy) {
       return equals(dictSetoid, fx, fy)
@@ -110,5 +112,5 @@ if (false) { // eslint-disable-line
     alt,
     pempty,
     extend
-  }: Monad<Maybe> & Foldable<Maybe> & Alt<Maybe> & Plus<Maybe> & Alternative<Maybe> & Extend<Maybe>)
+  }: Monad<IsMaybe> & Foldable<IsMaybe> & Alt<IsMaybe> & Plus<IsMaybe> & Alternative<IsMaybe> & Extend<IsMaybe>)
 }
