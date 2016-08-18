@@ -1,6 +1,8 @@
-Static land compatible
+# Features
 
-- [Specification](https://github.com/rpominov/static-land)
+- statically type checked by Flow
+- PureScript-like standard library
+- static land compatible ([Specification](https://github.com/rpominov/static-land))
 
 The idea (faking higher kinded types in Flow) is based on the paper [Lightweight higher-kinded polymorphism](https://www.cl.cam.ac.uk/~jdy22/papers/lightweight-higher-kinded-polymorphism.pdf) and [elm-brands](https://github.com/joneshf/elm-brands).
 
@@ -35,7 +37,9 @@ Add the following include to your babel loader
 }
 ```
 
-# Example
+# Examples
+
+## `Maybe` and `Arr`
 
 ```js
 import * as Maybe from 'flow-static-land/Maybe'
@@ -50,7 +54,7 @@ Maybe.map(f, Maybe.of(3)) // => 6
 Arr.ap(Arr.inj([f, g]), Arr.inj([1, 2, 3])) // => [2, 4, 6, 2, 3, 4]
 ```
 
-# Statically type checked (Flow)
+Statically type checked
 
 ```js
 Maybe.map(f, Maybe.of('s'))
@@ -66,3 +70,35 @@ const f = (n) => n * 2
 const f = (n) => n * 2
                  ^^^^^ number
 ```
+
+## Expressing side effect with the `Eff` monad
+
+See this [blog post](https://medium.com/@gcanti/the-eff-monad-implemented-in-flow-40803670c3eb#.sj4m00hpe) for context
+
+```js
+class DB {}
+
+type User = {
+  username: string,
+  uid: number
+};
+
+const users = {}
+let uid = 0
+
+function createUser(username: string): Eff<{ write: DB }, User> {
+  return inj(() => {
+    users[username] = { username, uid: ++uid }
+    return users[username]
+  })
+}
+
+function lookupUser(username: string): Eff<{ read: DB }, ?User> {
+  return inj(() => users[username])
+}
+
+// the signature shows that createThenLookupUser will read and write to the db
+const createThenLookupUser: (username: string) => Eff<{ read: DB, write: DB }, ?User> =
+  username => chain(user => lookupUser(user.username), createUser(username))
+```
+
