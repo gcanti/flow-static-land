@@ -1,8 +1,8 @@
 // @flow
-export interface Semigroup<S> {
-  concat(a: S, b: S): S
+export interface Semigroup<A> {
+  concat(a: A, b: A): A
 }
 
-export function concat<S>(dictSemigroup: Semigroup<S>, a: S, b: S): S {
+export function concat<A>(dictSemigroup: Semigroup<A>, a: A, b: A): A {
   return dictSemigroup.concat(a, b)
 }

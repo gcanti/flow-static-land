@@ -30,20 +30,20 @@ export function isJust<A>(x: HKT<Maybe, A>): boolean {
   return x != Nothing
 }
 
-export function empty<S>(): HKT<Maybe, S> {
+export function empty<A>(): HKT<Maybe, A> {
   return Nothing
 }
 
 export const pempty = empty
 
-export function concat<S>(dictSemigroup: Semigroup<S>, a: HKT<Maybe, S>, b: HKT<Maybe, S>): HKT<Maybe, S> {
+export function concat<A>(dictSemigroup: Semigroup<A>, a: HKT<Maybe, A>, b: HKT<Maybe, A>): HKT<Maybe, A> {
   if (isNothing(a) || isNothing(b)) {
     return Nothing
   }
   return inj(dictSemigroup.concat(prj(a), prj(b)))
 }
 
-export function getMonoid<S>(dictSemigroup: Semigroup<S>): Monoid<HKT<Maybe, S>> {
+export function getMonoid<A>(dictSemigroup: Semigroup<A>): Monoid<HKT<Maybe, A>> {
   return {
     empty,
     concat(a, b) {
@@ -82,17 +82,17 @@ export function extend<A, B>(f: (ea: HKT<Maybe, A>) => B, ea: HKT<Maybe, A>): HK
   return isNothing(ea) ? Nothing : inj(f(ea))
 }
 
-export function equals<S>(dictSetoid: Setoid<S>, fa: HKT<Maybe, S>, fb: HKT<Maybe, S>): boolean {
-  if (isNothing(fa) && isNothing(fb)) {
+export function equals<A>(dictSetoid: Setoid<A>, fx: HKT<Maybe, A>, fy: HKT<Maybe, A>): boolean {
+  if (isNothing(fx) && isNothing(fy)) {
     return true
   }
-  if (isJust(fa) && isJust(fb)) {
-    return dictSetoid.equals(prj(fa), prj(fb))
+  if (isJust(fx) && isJust(fy)) {
+    return dictSetoid.equals(prj(fx), prj(fy))
   }
   return false
 }
 
-export function getSetoid<S>(dictSetoid: Setoid<S>): Setoid<HKT<Maybe, S>> {
+export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<HKT<Maybe, A>> {
   return {
     equals(a, b) {
       return equals(dictSetoid, a, b)

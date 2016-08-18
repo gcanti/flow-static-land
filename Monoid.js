@@ -1,6 +1,6 @@
 // @flow
 import type { Semigroup } from './Semigroup'
 
-export interface Monoid<S> extends Semigroup<S> {
-  empty(): S
+export interface Monoid<A> extends Semigroup<A> {
+  empty(): A
 }
