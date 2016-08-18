@@ -4,12 +4,13 @@ import type { Monoid } from './Monoid'
 import type { Monad } from './Monad'
 import type { Foldable } from './Foldable'
 import type { Alt } from './Alt'
+import type { Plus } from './Plus'
+import type { Alternative } from './Alternative'
+import type { Setoid } from './Setoid'
 
 class Arr {}
 
-export const t = Arr
-
-function prj<A>(fa: HKT<Arr, A>): Array<A> {
+export function prj<A>(fa: HKT<Arr, A>): Array<A> {
   return ((fa: any): Array<A>)
 }
 
@@ -20,6 +21,8 @@ export function inj<A>(a: Array<A>): HKT<Arr, A> {
 export function empty<S>(): HKT<Arr, S> {
   return inj([])
 }
+
+export const pempty = empty
 
 export function concat<S>(a: HKT<Arr, S>, b: HKT<Arr, S>): HKT<Arr, S> {
   return inj(prj(a).concat(prj(b)))
@@ -47,6 +50,28 @@ export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: HKT<Arr, B>): A {
 
 export const alt = concat
 
+export function equals<S>(dictSetoid: Setoid<S>, fa: HKT<Arr, S>, fb: HKT<Arr, S>): boolean {
+  const a = prj(fa)
+  const b = prj(fb)
+  if (a.length !== b.length) {
+    return false
+  }
+  for (var i = 0, len = a.length; i < len; i++) {
+    if (!dictSetoid.equals(a[i], b[i])) {
+      return false
+    }
+  }
+  return true
+}
+
+export function getSetoid<S>(dictSetoid: Setoid<S>): Setoid<HKT<Arr, S>> {
+  return {
+    equals(a, b) {
+      return equals(dictSetoid, a, b)
+    }
+  }
+}
+
 if (false) { // eslint-disable-line
   ({
     concat,
@@ -56,6 +81,7 @@ if (false) { // eslint-disable-line
     of,
     chain,
     reduce,
-    alt
-  }: Monoid<HKT<Arr, *>> & Monad<Arr> & Foldable<Arr> & Alt<Arr>)
+    alt,
+    pempty
+  }: Monoid<HKT<Arr, *>> & Monad<Arr> & Foldable<Arr> & Alt<Arr> & Plus<Arr, *> & Alternative<Arr, *>)
 }
