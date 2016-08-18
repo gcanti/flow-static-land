@@ -10,5 +10,5 @@ export function map<F, A, B>(dictFunctor: Functor<F>, f: (a: A) => B, fa: HKT<F,
 }
 
 export function lift<F, A, B>(dictFunctor: Functor<F>, f: (a: A) => B): (fa: HKT<F, A>) => HKT<F, B> {
-  return fa => dictFunctor.map(f, fa)
+  return (fa) => dictFunctor.map(f, fa)
 }
