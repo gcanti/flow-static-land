@@ -66,8 +66,8 @@ export function equals<A>(dictSetoid: Setoid<A>, fx: HKT<Arr, A>, fy: HKT<Arr, A
 
 export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<HKT<Arr, A>> {
   return {
-    equals(x, y) {
-      return equals(dictSetoid, x, y)
+    equals(fx, fy) {
+      return equals(dictSetoid, fx, fy)
     }
   }
 }
