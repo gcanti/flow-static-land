@@ -112,5 +112,10 @@ if (false) { // eslint-disable-line
     alt,
     pempty,
     extend
-  }: Monad<IsMaybe> & Foldable<IsMaybe> & Alt<IsMaybe> & Plus<IsMaybe> & Alternative<IsMaybe> & Extend<IsMaybe>)
+  }: Monad<IsMaybe> &
+     Foldable<IsMaybe> &
+     Alt<IsMaybe> &
+     Plus<IsMaybe> &
+     Alternative<IsMaybe> &
+     Extend<IsMaybe>)
 }

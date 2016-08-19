@@ -85,5 +85,10 @@ if (false) { // eslint-disable-line
     reduce,
     alt,
     pempty
-  }: Monoid<Arr<*>> & Monad<IsArr> & Foldable<IsArr> & Alt<IsArr> & Plus<IsArr> & Alternative<IsArr>)
+  }: Monoid<Arr<*>> &
+     Monad<IsArr> &
+     Foldable<IsArr> &
+     Alt<IsArr> &
+     Plus<IsArr> &
+     Alternative<IsArr>)
 }
