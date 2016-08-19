@@ -76,6 +76,9 @@ const f = (n) => n * 2
 See this [blog post](https://medium.com/@gcanti/the-eff-monad-implemented-in-flow-40803670c3eb#.sj4m00hpe) for context
 
 ```js
+import type { Eff } from 'flow-static-land/Eff'
+import { inj } from 'flow-static-land/Eff'
+
 class DB {}
 
 type User = {
