@@ -54,7 +54,7 @@ export function extend<A, B>(f: (ea: HKT<Identity, A>) => B, ea: HKT<Identity, A
   return of(f(ea))
 }
 
-const extract = prj
+export const extract = prj
 
 export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<HKT<Identity, A>> {
   return {
