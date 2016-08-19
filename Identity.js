@@ -24,6 +24,10 @@ function inj<A>(a: A): HKT<Identity, A> {
   return ((a: any): HKT<Identity, A>)
 }
 
+export function id<A>(a: A): A {
+  return a
+}
+
 export function map<A, B>(f: (a: A) => B, fa: HKT<Identity, A>): HKT<Identity, B> {
   return inj(f(prj(fa)))
 }
