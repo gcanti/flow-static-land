@@ -71,7 +71,7 @@ const f = (n) => n * 2
                  ^^^^^ number
 ```
 
-## Expressing side effect with the `Eff` monad
+## Expressing side effects with the `Eff` monad
 
 See this [blog post](https://medium.com/@gcanti/the-eff-monad-implemented-in-flow-40803670c3eb#.sj4m00hpe) for context
 
