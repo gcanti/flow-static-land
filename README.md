@@ -42,28 +42,28 @@ Add the following include to your babel loader
 ## `Maybe` and `Arr`
 
 ```js
-import * as Maybe from 'flow-static-land/Maybe'
-import * as Arr from 'flow-static-land/Arr'
+import * as maybe from 'flow-static-land/Maybe'
+import * as arr from 'flow-static-land/Arr'
 
 const f = (n) => n * 2
 const g = (n) => n + 1
 
-Maybe.map(f, Maybe.Nothing) // => null
-Maybe.map(f, Maybe.of(3)) // => 6
+maybe.map(f, maybe.Nothing) // => null
+maybe.map(f, maybe.of(3)) // => 6
 
-Arr.ap(Arr.inj([f, g]), Arr.inj([1, 2, 3])) // => [2, 4, 6, 2, 3, 4]
+arr.ap(arr.inj([f, g]), arr.inj([1, 2, 3])) // => [2, 4, 6, 2, 3, 4]
 ```
 
 Statically type checked
 
 ```js
-Maybe.map(f, Maybe.of('s'))
+maybe.map(f, maybe.of('s'))
 ```
 
 Error
 
 ```
-Maybe.map(f, Maybe.of('s'))
+maybe.map(f, maybe.of('s'))
                   ^^^^^^^^^^^^^ call of method `of`
 const f = (n) => n * 2
                  ^ string. This type is incompatible with
