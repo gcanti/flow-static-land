@@ -14,12 +14,10 @@ class IsMaybe {}
 
 export type Maybe<A> = HKT<IsMaybe, A>;
 
-// keep private
 function prj<A>(fa: Maybe<A>): A {
   return ((fa: any): A)
 }
 
-// keep private
 function inj<A>(a: A): Maybe<A> {
   return ((a: any): Maybe<A>)
 }

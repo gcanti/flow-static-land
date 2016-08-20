@@ -14,12 +14,10 @@ import type { Comonad } from './Comonad'
 
 class Identity {}
 
-// keep private
 function prj<A>(fa: HKT<Identity, A>): A {
   return ((fa: any): A)
 }
 
-// keep private
 function inj<A>(a: A): HKT<Identity, A> {
   return ((a: any): HKT<Identity, A>)
 }
