@@ -14,12 +14,12 @@ class IsMaybe {}
 
 export type Maybe<A> = HKT<IsMaybe, A>;
 
-function prj<A>(fa: Maybe<A>): A {
-  return ((fa: any): A)
+function inj<A>(a: ?A): Maybe<A> {
+  return ((a: any): Maybe<A>)
 }
 
-function inj<A>(a: A): Maybe<A> {
-  return ((a: any): Maybe<A>)
+export function prj<A>(fa: Maybe<A>): ?A {
+  return ((fa: any): A)
 }
 
 export function isNothing<A>(x: Maybe<A>): boolean {
@@ -36,11 +36,13 @@ export function empty<A>(): Maybe<A> {
 
 export const pempty = empty
 
-export function concat<A>(dictSemigroup: Semigroup<A>, a: Maybe<A>, b: Maybe<A>): Maybe<A> {
-  if (isNothing(a) || isNothing(b)) {
+export function concat<A>(dictSemigroup: Semigroup<A>, fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {
+  const x = prj(fx)
+  const y = prj(fy)
+  if (x == null || y == null) {
     return Nothing
   }
-  return inj(dictSemigroup.concat(prj(a), prj(b)))
+  return inj(dictSemigroup.concat(x, y))
 }
 
 export function getMonoid<A>(dictSemigroup: Semigroup<A>): Monoid<Maybe<A>> {
@@ -53,11 +55,13 @@ export function getMonoid<A>(dictSemigroup: Semigroup<A>): Monoid<Maybe<A>> {
 }
 
 export function map<A, B>(f: (a: A) => B, fa: Maybe<A>): Maybe<B> {
-  return isNothing(fa) ? Nothing : inj(f(prj(fa)))
+  const a = prj(fa)
+  return a == null ? Nothing : inj(f(a))
 }
 
 export function ap<A, B>(fab: Maybe<(a: A) => B>, fa: Maybe<A>): Maybe<B> {
-  return isNothing(fab) ? Nothing : map(prj(fab), fa)
+  const ab = prj(fab)
+  return ab == null ? Nothing : map(ab, fa)
 }
 
 export function of<A>(a: A): Maybe<A> {
@@ -65,13 +69,15 @@ export function of<A>(a: A): Maybe<A> {
 }
 
 export function chain<A, B>(f: (a: A) => Maybe<B>, fa: Maybe<A>): Maybe<B> {
-  return isNothing(fa) ? Nothing : f(prj(fa))
+  const a = prj(fa)
+  return a == null ? Nothing : f(a)
 }
 
 export const Nothing: Maybe<any> = inj(null)
 
 export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Maybe<B>): A {
-  return isNothing(fb) ? a : f(a, prj(fb))
+  const b = prj(fb)
+  return b == null ? a : f(a, b)
 }
 
 export function alt<A>(fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {
@@ -83,11 +89,13 @@ export function extend<A, B>(f: (ea: Maybe<A>) => B, ea: Maybe<A>): Maybe<B> {
 }
 
 export function equals<A>(dictSetoid: Setoid<A>, fx: Maybe<A>, fy: Maybe<A>): boolean {
-  if (isNothing(fx) && isNothing(fy)) {
+  const x = prj(fx)
+  const y = prj(fy)
+  if (x == null || y == null) {
     return true
   }
-  if (isJust(fx) && isJust(fy)) {
-    return dictSetoid.equals(prj(fx), prj(fy))
+  if (x != null || y != null) {
+    return dictSetoid.equals(x, y)
   }
   return false
 }
