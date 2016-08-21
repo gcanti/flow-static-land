@@ -1,6 +1,11 @@
 // @flow
 import type { Setoid } from './Setoid'
 import type { Ordering } from './Ordering'
+import {
+  setoidBoolean,
+  setoidNumber,
+  setoidString
+} from './Setoid'
 
 export interface Ord<A> extends Setoid<A> {
   compare(x: A, y: A): Ordering
@@ -14,17 +19,17 @@ export function unsafeCompare(x: any, y: any): Ordering {
   return x < y ? 'LT' : x > y ? 'GT' : 'EQ'
 }
 
-export const ordBoolean = {
+export const ordBoolean: Ord<boolean> = Object.assign({}, {
   compare: unsafeCompare
-}
+}, setoidBoolean)
 
-export const ordNumber = {
+export const ordNumber: Ord<number> = Object.assign({}, {
   compare: unsafeCompare
-}
+}, setoidNumber)
 
-export const ordString = {
+export const ordString: Ord<string> = Object.assign({}, {
   compare: unsafeCompare
-}
+}, setoidString)
 
 export function lessThan<A>(dictOrd: Ord<A>, x: A, y: A): boolean {
   return dictOrd.compare(x, y) === 'LT'

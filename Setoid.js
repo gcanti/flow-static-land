@@ -6,3 +6,19 @@ export interface Setoid<A> {
 export function equals<A>(dictSetoid: Setoid<A>, x: A, y: A): boolean {
   return dictSetoid.equals(x, y)
 }
+
+export function strictEquals(a: any, b: any): boolean {
+  return a === b
+}
+
+export const setoidBoolean: Setoid<boolean> = {
+  equals: strictEquals
+}
+
+export const setoidNumber: Setoid<number> = {
+  equals: strictEquals
+}
+
+export const setoidString: Setoid<string> = {
+  equals: strictEquals
+}
