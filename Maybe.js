@@ -9,6 +9,7 @@ import type { Plus } from './Plus'
 import type { Alternative } from './Alternative'
 import type { Extend } from './Extend'
 import type { Setoid } from './Setoid'
+import { id } from './Identity'
 
 class IsMaybe {}
 
@@ -19,7 +20,7 @@ function inj<A>(a: ?A): Maybe<A> {
 }
 
 export function prj<A>(fa: Maybe<A>): ?A {
-  return ((fa: any): A)
+  return ((fa: any): ?A)
 }
 
 export function isNothing<A>(x: Maybe<A>): boolean {
@@ -106,6 +107,15 @@ export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<Maybe<A>> {
       return equals(dictSetoid, fx, fy)
     }
   }
+}
+
+export function maybe<A, B>(b: B, f: (a: A) => B, fa: Maybe<A>): B {
+  const a = prj(fa)
+  return a == null ? b : f(a)
+}
+
+export function fromMaybe<A>(a: A, fa: Maybe<A>): A {
+  return maybe(a, id, fa)
 }
 
 if (false) { // eslint-disable-line
