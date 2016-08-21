@@ -2,7 +2,9 @@
   "name": "flow-static-land",
   "version": "0.1.0",
   "description": "Implementation of common algebraic types in JavaScript + Flow based on static-land",
-  "scripts": {},
+  "scripts": {
+    "test": "mocha --compilers js:babel-register"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gcanti/flow-static-land.git"
@@ -14,9 +16,14 @@
   },
   "homepage": "https://github.com/gcanti/flow-static-land",
   "devDependencies": {
+    "babel-cli": "^6.11.4",
     "babel-eslint": "^6.1.2",
+    "babel-plugin-syntax-flow": "^6.13.0",
+    "babel-plugin-transform-flow-strip-types": "^6.8.0",
+    "babel-preset-es2015": "^6.13.2",
     "eslint": "^2.12.0",
-    "eslint-plugin-flow-vars": "^0.4.0"
+    "eslint-plugin-flow-vars": "^0.4.0",
+    "mocha": "^3.0.2"
   },
   "tags": [
     "flow",
