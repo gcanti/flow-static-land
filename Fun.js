@@ -1,3 +1,5 @@
+export type Predicate<A> = (a: A) => boolean;
+
 // Flips the order of the arguments to a function of two arguments.
 export function flip<A, B, C>(f: (a: A, b: B) => C): (b: B, a: A) => C {
   return (b, a) => f(a, b)

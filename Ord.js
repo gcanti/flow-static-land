@@ -7,8 +7,19 @@ import {
   setoidString
 } from './Setoid'
 
+export type Comparator<A> = (x: A, y: A) => Ordering;
+
+export type NativeComparator<A> = (x: A, y: A) => number;
+
 export interface Ord<A> extends Setoid<A> {
   compare(x: A, y: A): Ordering
+}
+
+export function toNativeComparator<A>(compare: Comparator<A>): NativeComparator<A> {
+  return (x, y) => {
+    const c = compare(x, y)
+    return c === 'GT' ? 1 : c === 'EQ' ? 0 : -1
+  }
 }
 
 export function compare<A>(dictOrd: Ord<A>, x: A, y: A): Ordering {
