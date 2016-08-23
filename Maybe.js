@@ -19,7 +19,7 @@ function inj<A>(a: ?A): Maybe<A> {
   return ((a: any): Maybe<A>)
 }
 
-export function prj<A>(fa: Maybe<A>): ?A {
+function prj<A>(fa: Maybe<A>): ?A {
   return ((fa: any): ?A)
 }
 

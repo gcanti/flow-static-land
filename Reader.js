@@ -10,11 +10,11 @@ class IsReader {}
 export type ReaderV<E, A> = (e: E) => A;
 export type Reader<E, A> = HKT2<IsReader, E, A>;
 
-export function inj<E, A>(a: ReaderV<E, A>): Reader<E, A> {
+function inj<E, A>(a: ReaderV<E, A>): Reader<E, A> {
   return ((a: any): Reader<E, A>)
 }
 
-export function prj<E, A>(fa: Reader<E, A>): ReaderV<E, A> {
+function prj<E, A>(fa: Reader<E, A>): ReaderV<E, A> {
   return ((fa: any): ReaderV<E, A>)
 }
 
@@ -26,6 +26,8 @@ export function runReader<E, A>(r: Reader<E, A>, e: E): A {
 export function ask<E>(): Reader<E, E> {
   return inj(id)
 }
+
+export const asks = inj
 
 // changes the value of the local context during the execution of the action `fa`
 export function local<E, A>(f: (e: E) => E, fa: Reader<E, A>): Reader<E, A> {
