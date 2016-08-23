@@ -104,4 +104,3 @@ function lookupUser(username: string): Eff<{ read: DB }, ?User> {
 const createThenLookupUser: (username: string) => Eff<{ read: DB, write: DB }, ?User> =
   username => chain(user => lookupUser(user.username), createUser(username))
 ```
-
