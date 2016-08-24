@@ -2,7 +2,7 @@
 import type { Eff } from './Eff'
 import * as eff from './Eff'
 import { CONSOLE } from './Console'
-import { RANDOM, randomInt } from './Random'
+import { RANDOM, random } from './Random'
 import { EXCEPTION, throwException, error } from './Exception'
 import type { State } from './State'
 import * as state from './State'
@@ -12,6 +12,20 @@ import { log } from './Console'
 import type { Either } from './Either'
 import * as either from './Either'
 import { replicateA } from './Unfoldable'
+import * as tuple from './Tuple'
+
+/*
+
+  Example:
+
+  import { quickCheck2, choose, getTestableFunction } from 'flow-static-land/QuickCheck'
+  import { runEff } from 'flow-static-land/Eff'
+
+  const testable = getTestableFunction(choose(0, 10))
+  const prop = (n) => n < 5
+  runEff(quickCheck2(testable, 10, prop))
+
+*/
 
 // A type synonym which represents the effects used by the `quickCheck` function.
 type QC<E, A> = Eff<{ console: CONSOLE, random: RANDOM, err: EXCEPTION } & E, A>;
@@ -57,19 +71,42 @@ function throwOnFirstFailure<E>(results: Arr<Result>): QC<E, void> {
 
 const getMessage = (p, n) => `${p}/${n} test(s) passed.`
 
-const lcgM = 48271
-
-const seedMin = 1
-
-const seedMax = lcgM - 1
-
-const randomSeed = () => randomInt(seedMin, seedMax)
-
 export function quickCheck2<E, P>(dictTestable: Testable<P>, n: number, prop: P): QC<E, void> {
   return eff.chain((seed) => {
     const results = quickCheckPure(dictTestable, seed, n, prop)
     const message = log(getMessage(arr.length(results), n))
     return eff.chain(() => throwOnFirstFailure(results), message)
-  }, randomSeed())
+  }, random())
 }
 
+const testBoolean = {
+  test(b: boolean): Gen<Result> {
+    return state.of(b ? either.right() : either.left('Test returned false'))
+  }
+}
+
+const perturbSeed = (seed) => seed + Math.random() - Math.random() // <= cheating
+
+const uniform: Gen<number> = state.inj((s) => {
+  const newSeed = perturbSeed(s.newSeed)
+  return tuple.inj([
+    newSeed,
+    { newSeed: newSeed, size: s.size }
+  ])
+})
+
+export function choose(a: number, b: number): Gen<number> {
+  const min = Math.min(a, b)
+  const max = Math.max(a, b)
+  return state.map((n) => {
+    return (n * (max - min)) + min
+  }, uniform)
+}
+
+export function getTestableFunction<T>(gen: Gen<T>): Testable<(t: T) => boolean> {
+  return {
+    test(f) {
+      return state.chain((a) => testBoolean.test(f(a)), gen)
+    }
+  }
+}

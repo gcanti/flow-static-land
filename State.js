@@ -10,11 +10,11 @@ class IsState {}
 export type StateV<S, A> = (s: S) => Tuple<A, S>;
 export type State<S, A> = HKT2<IsState, S, A>;
 
-function inj<S, A>(a: StateV<S, A>): State<S, A> {
+export function inj<S, A>(a: StateV<S, A>): State<S, A> {
   return ((a: any): State<S, A>)
 }
 
-function prj<S, A>(fa: State<S, A>): StateV<S, A> {
+export function prj<S, A>(fa: State<S, A>): StateV<S, A> {
   return ((fa: any): StateV<S, A>)
 }
 
