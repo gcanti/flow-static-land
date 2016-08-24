@@ -68,7 +68,8 @@ const randomSeed = () => randomInt(seedMin, seedMax)
 export function quickCheck2<E, P>(dictTestable: Testable<P>, n: number, prop: P): QC<E, void> {
   return eff.chain((seed) => {
     const results = quickCheckPure(dictTestable, seed, n, prop)
-    return eff.chain(() => throwOnFirstFailure(results), log(getMessage(arr.length(results), n)))
+    const message = log(getMessage(arr.length(results), n))
+    return eff.chain(() => throwOnFirstFailure(results), message)
   }, randomSeed())
 }
 

@@ -6,6 +6,6 @@ export interface Chain<F> extends Apply<F> {
   chain<A, B>(f: (a: A) => HKT<F, B>, fa: HKT<F, A>): HKT<F, B>
 }
 
-export function chain<F, A, B>(dictChain: Chain<F>, f: (a: A) => HKT<F, B>, fa: HKT<F, A>): HKT<F, B> {
-  return dictChain.chain(f, fa)
+export function chain<F, A, B>(chain: Chain<F>, f: (a: A) => HKT<F, B>, fa: HKT<F, A>): HKT<F, B> {
+  return chain.chain(f, fa)
 }
