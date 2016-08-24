@@ -1,5 +1,4 @@
 // @flow
-import { HKT } from './HKT'
 import type { Monoid } from './Monoid'
 import type { Monad } from './Monad'
 import type { Foldable } from './Foldable'
@@ -8,11 +7,17 @@ import type { Plus } from './Plus'
 import type { Alternative } from './Alternative'
 import type { Setoid } from './Setoid'
 import type { Maybe } from './Maybe'
-import * as maybe from './Maybe'
-import { id } from './Identity'
 import type { Predicate } from './Fun'
 import type { Ord } from './Ord'
+import type { Applicative } from './Applicative'
+import type { Traversable } from './Traversable'
+import type { Tuple } from './Tuple'
+
+import { HKT } from './HKT'
+import * as maybe from './Maybe'
+import { id } from './Identity'
 import { toNativeComparator } from './Ord'
+import * as tuple from './Tuple'
 
 class IsArr {}
 
@@ -58,6 +63,29 @@ export function chain<A, B>(f: (a: A) => Arr<B>, fa: Arr<A>): Arr<B> {
 
 export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Arr<B>): A {
   return prj(fb).reduce(f, a)
+}
+
+export function sequence<F, A>(applicative: Applicative<F>, tfa: Arr<HKT<F, A>>): HKT<F, Arr<A>> {
+  function f(fas: HKT<F, Arr<A>>, fa: HKT<F, A>): HKT<F, Arr<A>> {
+    const ffs = applicative.map((as) => (a) => snoc(as, a), fas)
+    return applicative.ap(ffs, fa)
+  }
+  return reduce(f, applicative.of(empty()), tfa)
+}
+
+export function unfoldr<A, B>(f: (b: B) => Maybe<Tuple<A, B>>, b: B): Arr<A> {
+  const ret = []
+  let bb = b
+  while (true) { // eslint-disable-line no-constant-condition
+    const mt = f(bb)
+    if (maybe.isNothing(mt)) {
+      break
+    }
+    const t = maybe.fromJust(mt)
+    ret.push(tuple.fst(t))
+    bb = tuple.snd(t)
+  }
+  return inj(ret)
 }
 
 export const alt = concat
@@ -228,11 +256,13 @@ if (false) { // eslint-disable-line
     chain,
     reduce,
     alt,
-    pempty
+    pempty,
+    sequence
   }: Monoid<Arr<*>> &
      Monad<IsArr> &
      Foldable<IsArr> &
      Alt<IsArr> &
      Plus<IsArr> &
-     Alternative<IsArr>)
+     Alternative<IsArr> &
+     Traversable<IsArr>)
 }

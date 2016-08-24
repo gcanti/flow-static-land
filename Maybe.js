@@ -118,6 +118,14 @@ export function fromMaybe<A>(a: A, fa: Maybe<A>): A {
   return maybe(a, id, fa)
 }
 
+export function fromJust<A>(fa: Maybe<A>): A {
+  const a = prj(fa)
+  if (a == null) {
+    throw new Error('fromJust returned a Nothing')
+  }
+  return a
+}
+
 if (false) { // eslint-disable-line
   ({
     map,

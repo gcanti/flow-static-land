@@ -1,6 +1,7 @@
 // @flow
 import * as arr from '../Arr'
 import * as maybe from '../Maybe'
+import * as tuple from '../Tuple'
 import assert from 'assert'
 import { ordNumber } from '../Ord'
 
@@ -11,6 +12,23 @@ describe('Arr', () => {
 
   const as = arr.inj([1, 2, 3])
   const empty = arr.empty()
+
+  it('sequence', () => {
+    const tfaNothing = arr.inj([maybe.of(1), maybe.Nothing, maybe.of(2)])
+    const fasNothing = arr.sequence(maybe, tfaNothing)
+    assert.ok(maybe.isNothing(fasNothing))
+    const tfa = arr.inj([maybe.of(1), maybe.of(2)])
+    const fas = arr.sequence(maybe, tfa)
+    assert.ok(maybe.isJust(fas))
+    assert.deepEqual(fas, [1, 2])
+  })
+
+  it('unfoldr', () => {
+    const as = arr.unfoldr((n) => {
+      return n > 0 ? maybe.of(tuple.inj([n, n - 1])) : maybe.Nothing
+    }, 5)
+    assert.deepEqual(as, [5, 4, 3, 2, 1])
+  })
 
   it('isEmpty', () => {
     assert.strictEqual(arr.isEmpty(as), false)

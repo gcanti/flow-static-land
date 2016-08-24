@@ -34,7 +34,7 @@ function inj<L, R>(e: EitherV<L, R>): Either<L, R> {
   return ((e: any): Either<L, R>)
 }
 
-function prj<L, R>(fe: Either<L, R>): EitherV<L, R> {
+export function prj<L, R>(fe: Either<L, R>): EitherV<L, R> {
   return ((fe: any): EitherV<L, R>)
 }
 
