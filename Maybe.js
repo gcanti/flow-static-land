@@ -37,20 +37,20 @@ export function empty<A>(): Maybe<A> {
 
 export const pempty = empty
 
-export function concat<A>(dictSemigroup: Semigroup<A>, fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {
+export function concat<A>(semigroup: Semigroup<A>, fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {
   const x = prj(fx)
   const y = prj(fy)
   if (x == null || y == null) {
     return Nothing
   }
-  return inj(dictSemigroup.concat(x, y))
+  return inj(semigroup.concat(x, y))
 }
 
-export function getMonoid<A>(dictSemigroup: Semigroup<A>): Monoid<Maybe<A>> {
+export function getMonoid<A>(semigroup: Semigroup<A>): Monoid<Maybe<A>> {
   return {
     empty,
     concat(a, b) {
-      return concat(dictSemigroup, a, b)
+      return concat(semigroup, a, b)
     }
   }
 }
@@ -89,22 +89,22 @@ export function extend<A, B>(f: (ea: Maybe<A>) => B, ea: Maybe<A>): Maybe<B> {
   return isNothing(ea) ? Nothing : inj(f(ea))
 }
 
-export function equals<A>(dictSetoid: Setoid<A>, fx: Maybe<A>, fy: Maybe<A>): boolean {
+export function equals<A>(setoid: Setoid<A>, fx: Maybe<A>, fy: Maybe<A>): boolean {
   const x = prj(fx)
   const y = prj(fy)
   if (x == null || y == null) {
     return true
   }
   if (x != null || y != null) {
-    return dictSetoid.equals(x, y)
+    return setoid.equals(x, y)
   }
   return false
 }
 
-export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<Maybe<A>> {
+export function getSetoid<A>(setoid: Setoid<A>): Setoid<Maybe<A>> {
   return {
     equals(fx, fy) {
-      return equals(dictSetoid, fx, fy)
+      return equals(setoid, fx, fy)
     }
   }
 }

@@ -3,10 +3,6 @@ export interface Setoid<A> {
   equals(x: A, y: A): boolean
 }
 
-export function equals<A>(dictSetoid: Setoid<A>, x: A, y: A): boolean {
-  return dictSetoid.equals(x, y)
-}
-
 export function strictEquals(a: any, b: any): boolean {
   return a === b
 }

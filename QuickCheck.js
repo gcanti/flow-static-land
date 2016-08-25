@@ -47,12 +47,12 @@ export interface Testable<P> {
   test(props: P): Gen<Result>
 }
 
-export function quickCheck<E, P>(dictTestable: Testable<P>, prop: P): QC<E, void> {
-  return quickCheck2(dictTestable, 100, prop)
+export function quickCheck<E, P>(testable: Testable<P>, prop: P): QC<E, void> {
+  return quickCheck2(testable, 100, prop)
 }
 
-export function quickCheckPure<P>(dictTestable: Testable<P>, s: Seed, n: number, prop: P): Arr<Result> {
-  return state.evalState(replicateA(state, arr, n, dictTestable.test(prop)), { newSeed: s, size: 10 })
+export function quickCheckPure<P>(testable: Testable<P>, s: Seed, n: number, prop: P): Arr<Result> {
+  return state.evalState(replicateA(state, arr, n, testable.test(prop)), { newSeed: s, size: 10 })
 }
 
 function throwOnFirstFailure<E>(results: Arr<Result>): QC<E, void> {
@@ -71,9 +71,9 @@ function throwOnFirstFailure<E>(results: Arr<Result>): QC<E, void> {
 
 const getMessage = (p, n) => `${p}/${n} test(s) passed.`
 
-export function quickCheck2<E, P>(dictTestable: Testable<P>, n: number, prop: P): QC<E, void> {
+export function quickCheck2<E, P>(testable: Testable<P>, n: number, prop: P): QC<E, void> {
   return eff.chain((seed) => {
-    const results = quickCheckPure(dictTestable, seed, n, prop)
+    const results = quickCheckPure(testable, seed, n, prop)
     const message = log(getMessage(arr.length(results), n))
     return eff.chain(() => throwOnFirstFailure(results), message)
   }, random())

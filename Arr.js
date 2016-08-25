@@ -90,24 +90,24 @@ export function unfoldr<A, B>(f: (b: B) => Maybe<Tuple<A, B>>, b: B): Arr<A> {
 
 export const alt = concat
 
-export function equals<A>(dictSetoid: Setoid<A>, fx: Arr<A>, fy: Arr<A>): boolean {
+export function equals<A>(setoid: Setoid<A>, fx: Arr<A>, fy: Arr<A>): boolean {
   const x = prj(fx)
   const y = prj(fy)
   if (x.length !== y.length) {
     return false
   }
   for (var i = 0, len = x.length; i < len; i++) {
-    if (!dictSetoid.equals(x[i], y[i])) {
+    if (!setoid.equals(x[i], y[i])) {
       return false
     }
   }
   return true
 }
 
-export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<Arr<A>> {
+export function getSetoid<A>(setoid: Setoid<A>): Setoid<Arr<A>> {
   return {
     equals(fx, fy) {
-      return equals(dictSetoid, fx, fy)
+      return equals(setoid, fx, fy)
     }
   }
 }
@@ -242,8 +242,8 @@ export function catMaybes<A>(as: Arr<Maybe<A>>): Arr<A> {
   return mapMaybe(id, as)
 }
 
-export function sort<A>(dictOrd: Ord<A>, as: Arr<A>): Arr<A> {
-  return inj(copy(as).sort(toNativeComparator(dictOrd.compare)))
+export function sort<A>(ord: Ord<A>, as: Arr<A>): Arr<A> {
+  return inj(copy(as).sort(toNativeComparator(ord.compare)))
 }
 
 if (false) { // eslint-disable-line

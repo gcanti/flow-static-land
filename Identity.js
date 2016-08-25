@@ -48,8 +48,8 @@ export function alt<A>(fx: HKT<Identity, A>, fy: HKT<Identity, A>): HKT<Identity
   return fx
 }
 
-export function sequence<F, A>(dictApplicative: Applicative<F>, tfa: HKT<Identity, HKT<F, A>>): HKT<F, HKT<Identity, A>> {
-  return dictApplicative.map(of, prj(tfa))
+export function sequence<F, A>(applicative: Applicative<F>, tfa: HKT<Identity, HKT<F, A>>): HKT<F, HKT<Identity, A>> {
+  return applicative.map(of, prj(tfa))
 }
 
 export function extend<A, B>(f: (ea: HKT<Identity, A>) => B, ea: HKT<Identity, A>): HKT<Identity, B> {
@@ -58,36 +58,36 @@ export function extend<A, B>(f: (ea: HKT<Identity, A>) => B, ea: HKT<Identity, A
 
 export const extract = prj
 
-export function getSetoid<A>(dictSetoid: Setoid<A>): Setoid<HKT<Identity, A>> {
+export function getSetoid<A>(setoid: Setoid<A>): Setoid<HKT<Identity, A>> {
   return {
     equals(fx, fy) {
-      return dictSetoid.equals(prj(fx), prj(fy))
+      return setoid.equals(prj(fx), prj(fy))
     }
   }
 }
 
-export function getOrd<A>(dictOrd: Ord<A>): Ord<HKT<Identity, A>> {
+export function getOrd<A>(ord: Ord<A>): Ord<HKT<Identity, A>> {
   return {
-    equals: getSetoid(dictOrd).equals,
+    equals: getSetoid(ord).equals,
     compare(fx, fy) {
-      return dictOrd.compare(prj(fx), prj(fy))
+      return ord.compare(prj(fx), prj(fy))
     }
   }
 }
 
-export function getSemigroup<A>(dictSemigroup: Semigroup<A>): Semigroup<HKT<Identity, A>> {
+export function getSemigroup<A>(semigroup: Semigroup<A>): Semigroup<HKT<Identity, A>> {
   return {
     concat(fx, fy) {
-      return inj(dictSemigroup.concat(prj(fx), prj(fy)))
+      return inj(semigroup.concat(prj(fx), prj(fy)))
     }
   }
 }
 
-export function getMonoid<A>(dicMonoid: Monoid<A>): Monoid<HKT<Identity, A>> {
+export function getMonoid<A>(monoid: Monoid<A>): Monoid<HKT<Identity, A>> {
   return {
-    concat: getSemigroup(dicMonoid).concat,
+    concat: getSemigroup(monoid).concat,
     empty() {
-      return inj(dicMonoid.empty())
+      return inj(monoid.empty())
     }
   }
 }

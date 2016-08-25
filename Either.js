@@ -104,21 +104,21 @@ export function reduce<L, A, B>(f: (a: A, b: B) => A, a: A, fb: Either<L, B>): A
   return f(a, b.value0)
 }
 
-export function sequence<L, F, A>(dictApplicative: Applicative<F>, tfa: Either<L, HKT<F, A>>): HKT<F, Either<L, A>> {
+export function sequence<L, F, A>(applicative: Applicative<F>, tfa: Either<L, HKT<F, A>>): HKT<F, Either<L, A>> {
   const fa = prj(tfa)
   if (fa instanceof Left) {
-    return dictApplicative.of(unsafeCoerce(tfa))
+    return applicative.of(unsafeCoerce(tfa))
   }
-  return dictApplicative.map(of, fa.value0)
+  return applicative.map(of, fa.value0)
 }
 
-export function getSemigroup<L, R>(dictSemigroup: Semigroup<R>): Semigroup<Either<L, R>> {
+export function getSemigroup<L, R>(semigroup: Semigroup<R>): Semigroup<Either<L, R>> {
   return {
     concat(a, b) {
       const av = prj(a)
       const bv = prj(b)
       if (av instanceof Right && bv instanceof Right) {
-        return right(dictSemigroup.concat(av.value0, bv.value0))
+        return right(semigroup.concat(av.value0, bv.value0))
       }
       return a
     }
