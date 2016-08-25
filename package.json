@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "description": "Implementation of common algebraic types in JavaScript + Flow based on static-land",
   "scripts": {
-    "start": "webpack --config=dev/webpack.config.js --watch --progress",
+    "dev": "webpack --config=dev/webpack.config.js --watch --progress",
+    "start": "webpack --config=example/webpack.config.js --watch --progress",
     "test": "mocha --compilers js:babel-register"
   },
   "repository": {

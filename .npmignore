@@ -1,2 +1,4 @@
 *.log
 node_modules
+dev
+example
