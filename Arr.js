@@ -67,7 +67,7 @@ export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Arr<B>): A {
 
 export function sequence<F, A>(applicative: Applicative<F>, tfa: Arr<HKT<F, A>>): HKT<F, Arr<A>> {
   function f(fas: HKT<F, Arr<A>>, fa: HKT<F, A>): HKT<F, Arr<A>> {
-    const ffs = applicative.map((as) => (a) => snoc(as, a), fas)
+    const ffs = applicative.map(as => a => snoc(as, a), fas)
     return applicative.ap(ffs, fa)
   }
   return reduce(f, applicative.of(empty()), tfa)
@@ -179,7 +179,7 @@ export function drop<A>(n: number, as: Arr<A>): Arr<A> {
 }
 
 export function dropWhile<A>(predicate: Predicate<A>, as: Arr<A>): Arr<A> {
-  return takeWhile((a) => !predicate(a), as)
+  return takeWhile(a => !predicate(a), as)
 }
 
 export function findIndex<A>(predicate: Predicate<A>, as: Arr<A>): Maybe<number> {
@@ -235,7 +235,7 @@ export function reverse<A>(as: Arr<A>): Arr<A> {
 }
 
 export function mapMaybe<A, B>(f: (a: A) => Maybe<B>, as: Arr<A>): Arr<B> {
-  return chain((a: A): Arr<B> => maybe.maybe(empty(), of, f(a)), as)
+  return chain(a => maybe.maybe(empty(), of, f(a)), as)
 }
 
 export function catMaybes<A>(as: Arr<Maybe<A>>): Arr<A> {

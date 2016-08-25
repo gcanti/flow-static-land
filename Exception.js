@@ -32,6 +32,6 @@ export function catchException<E: Object, A>(handler: ErrorHandler<E, A>, eff: E
 // Runs an Eff and returns eventual Exceptions as a `Left` value. If the
 // computation succeeds the result gets wrapped in a `Right`.
 export function tryEff<E: Object, A>(eff: Eff<{ err: EXCEPTION } & E, A>): Eff<E, Either<Error, A>> {
-  const handler = (e) => inj(() => left(e))
+  const handler = e => inj(() => left(e))
   return catchException(handler, map(right, eff))
 }

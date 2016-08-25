@@ -12,7 +12,7 @@ export function simm<A, B>(proof: Leibnitz<A, B>): Leibnitz<B, A> {
 }
 
 export function coerce<A, B>(proof: Leibnitz<A, B>): (a: A) => B {
-  return (a) => extract(proof(of(a)))
+  return a => extract(proof(of(a)))
 }
 
 export function coerceSymm<A, B>(proof: Leibnitz<A, B>): (b: B) => A {

@@ -6,5 +6,5 @@ export interface Functor<F> {
 }
 
 export function lift<F, A, B>(functor: Functor<F>, f: (a: A) => B): (fa: HKT<F, A>) => HKT<F, B> {
-  return (fa) => functor.map(f, fa)
+  return fa => functor.map(f, fa)
 }

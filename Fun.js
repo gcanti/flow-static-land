@@ -17,9 +17,9 @@ export function on<A, B, C>(o: (x: B, y: B) => C, f: (a: A) => B): (x: A, y: A) 
 }
 
 export function compose<A, B, C>(f: (b: B) => C, g: (a: A) => B): (a: A) => C {
-  return (a) => f(g(a))
+  return a => f(g(a))
 }
 
 export function pipe<A, B, C>(f: (a: A) => B, g: (b: B) => C): (a: A) => C {
-  return (a) => g(f(a))
+  return a => g(f(a))
 }

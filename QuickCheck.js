@@ -72,7 +72,7 @@ function throwOnFirstFailure<E>(results: Arr<Result>): QC<E, void> {
 const getMessage = (p, n) => `${p}/${n} test(s) passed.`
 
 export function quickCheck2<E, P>(testable: Testable<P>, n: number, prop: P): QC<E, void> {
-  return eff.chain((seed) => {
+  return eff.chain(seed => {
     const results = quickCheckPure(testable, seed, n, prop)
     const message = log(getMessage(arr.length(results), n))
     return eff.chain(() => throwOnFirstFailure(results), message)
@@ -85,9 +85,9 @@ const testBoolean = {
   }
 }
 
-const perturbSeed = (seed) => seed + Math.random() - Math.random() // <= cheating
+const perturbSeed = seed => seed + Math.random() - Math.random() // <= cheating
 
-const uniform: Gen<number> = state.inj((s) => {
+const uniform: Gen<number> = state.inj(s => {
   const newSeed = perturbSeed(s.newSeed)
   return tuple.inj([
     newSeed,
@@ -98,7 +98,7 @@ const uniform: Gen<number> = state.inj((s) => {
 export function choose(a: number, b: number): Gen<number> {
   const min = Math.min(a, b)
   const max = Math.max(a, b)
-  return state.map((n) => {
+  return state.map(n => {
     return (n * (max - min)) + min
   }, uniform)
 }
@@ -106,7 +106,7 @@ export function choose(a: number, b: number): Gen<number> {
 export function getTestableFunction<T>(gen: Gen<T>): Testable<(t: T) => boolean> {
   return {
     test(f) {
-      return state.chain((a) => testBoolean.test(f(a)), gen)
+      return state.chain(a => testBoolean.test(f(a)), gen)
     }
   }
 }

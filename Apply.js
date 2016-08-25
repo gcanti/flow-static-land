@@ -7,6 +7,6 @@ export interface Apply<F> extends Functor<F> {
 }
 
 export function lift2<F, A, B, C>(apply: Apply<F>, f: (a: A, b: B) => C): (fa: HKT<F, A>, fb: HKT<F, B>) => HKT<F, C> {
-  const cf = (a) => (b) => f(a, b)
+  const cf = a => b => f(a, b)
   return (fa, fb) => apply.ap(apply.map(cf, fa), fb)
 }
