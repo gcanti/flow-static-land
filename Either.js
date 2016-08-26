@@ -54,6 +54,22 @@ export function isRight<L, R>(e: Either<L, R>): boolean {
   return prj(e) instanceof Right
 }
 
+export function fromLeft<L, R>(flr: Either<L, R>): L {
+  const lr = prj(flr)
+  if (lr instanceof Right) {
+    throw new Error('fromLeft returned a Right')
+  }
+  return lr.value0
+}
+
+export function fromRight<L, R>(flr: Either<L, R>): R {
+  const lr = prj(flr)
+  if (lr instanceof Left) {
+    throw new Error('fromRight returned a Left')
+  }
+  return lr.value0
+}
+
 export function map<L, A, B>(f: (a: A) => B, fa: Either<L, A>): Either<L, B> {
   const a = prj(fa)
   if (a instanceof Left) {
