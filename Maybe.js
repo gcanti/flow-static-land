@@ -40,10 +40,13 @@ export const pempty = empty
 export function concat<A>(semigroup: Semigroup<A>, fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {
   const x = prj(fx)
   const y = prj(fy)
-  if (x == null || y == null) {
-    return Nothing
+  if (x == null) {
+    return fy
   }
-  return inj(semigroup.concat(x, y))
+  if (y == null) {
+    return fx
+  }
+  return of(semigroup.concat(x, y))
 }
 
 export function getMonoid<A>(semigroup: Semigroup<A>): Monoid<Maybe<A>> {
