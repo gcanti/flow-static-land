@@ -19,7 +19,7 @@ export function prj<S, A>(fa: State<S, A>): StateV<S, A> {
 }
 
 export function get<S>(): State<S, S> {
-  return inj((s) => tuple.inj([s, s]))
+  return inj(s => tuple.inj([s, s]))
 }
 
 export function put<S>(s: S): State<S, void> {
@@ -27,11 +27,11 @@ export function put<S>(s: S): State<S, void> {
 }
 
 export function modify<S>(f: (s: S) => S): State<S, void> {
-  return inj((s) => tuple.inj([undefined, f(s)]))
+  return inj(s => tuple.inj([undefined, f(s)]))
 }
 
 export function gets<S, A>(f: (s: S) => A): State<S, A> {
-  return chain((s) => of(f(s)), get())
+  return chain(s => of(f(s)), get())
 }
 
 export function runState<S, A>(sa: State<S, A>, s: S): Tuple<A, S> {
@@ -47,19 +47,19 @@ export function execState<S, A>(sa: State<S, A>, s: S): S {
 }
 
 export function map<S, A, B>(f: (a: A) => B, fa: State<S, A>): State<S, B> {
-  return inj((s) => tuple.inj([f(evalState(fa, s)), s]))
+  return inj(s => tuple.inj([f(evalState(fa, s)), s]))
 }
 
 export function ap<S, A, B>(fab: State<S, (a: A) => B>, fa: State<S, A>): State<S, B> {
-  return chain((f) => map(f, fa), fab) // <= derived
+  return chain(f => map(f, fa), fab) // <= derived
 }
 
 export function of<S, A>(a: A): State<S, A> {
-  return inj((s) => tuple.inj([a, s]))
+  return inj(s => tuple.inj([a, s]))
 }
 
 export function chain<S, A, B>(f: (a: A) => State<S, B>, fa: State<S, A>): State<S, B> {
-  return inj((s) => prj(f(evalState(fa, s)))(s))
+  return inj(s => prj(f(evalState(fa, s)))(s))
 }
 
 if (false) { // eslint-disable-line

@@ -1,4 +1,11 @@
 // @flow
+
+/*
+
+  Porting of purescript-signal https://github.com/bodil/purescript-signal
+
+*/
+
 import type { Applicative } from './Applicative'
 import type { Functor } from './Functor'
 import type { Semigroup } from './Semigroup'

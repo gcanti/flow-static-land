@@ -15,11 +15,11 @@ class IsMaybe {}
 
 export type Maybe<A> = HKT<IsMaybe, A>;
 
-function inj<A>(a: ?A): Maybe<A> {
+export function inj<A>(a: ?A): Maybe<A> {
   return ((a: any): Maybe<A>)
 }
 
-function prj<A>(fa: Maybe<A>): ?A {
+export function prj<A>(fa: Maybe<A>): ?A {
   return ((fa: any): ?A)
 }
 

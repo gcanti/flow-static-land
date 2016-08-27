@@ -1,4 +1,11 @@
 // @flow
+
+/*
+
+  Partial porting of purescript-quickcheck https://github.com/purescript/purescript-quickcheck
+
+*/
+
 import type { Eff } from './Eff'
 import * as eff from './Eff'
 import { CONSOLE } from './Console'
@@ -66,7 +73,7 @@ function throwOnFirstFailure<E>(results: Arr<Result>): QC<E, void> {
       }
     }
   }
-  return eff.inj(() => undefined)
+  return eff.of(undefined)
 }
 
 const getMessage = (p, n) => `${p}/${n} test(s) passed.`
