@@ -22,6 +22,7 @@ import * as tuple from './Tuple'
 class IsArr {}
 
 export type ArrV<A> = Array<A>;
+
 export type Arr<A> = HKT<IsArr, A>;
 
 export function inj<A>(a: ArrV<A>): Arr<A> {

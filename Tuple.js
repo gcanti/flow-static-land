@@ -10,6 +10,7 @@ import type { Comonad } from './Comonad'
 class IsTuple {}
 
 export type TupleV<A, B> = [A, B];
+
 export type Tuple<A, B> = HKT2<IsTuple, A, B>;
 
 export function inj<A, B>(t: TupleV<A, B>): Tuple<A, B> {

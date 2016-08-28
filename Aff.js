@@ -18,11 +18,13 @@ import * as eff from './Eff'
 class IsAff {}
 
 export type ErrorHandler<E> = (e: Error) => Eff<E, void>;
+
 export type SuccessHandler<E, A> = (a: A) => Eff<E, void>;
 
 // An asynchronous computation with effects `e`. The computation either
 // errors or produces a value of type `a`.
 export type AffV<E, A> = (s: (a: A) => void, e: (e: Error) => void) => Canceler<E>;
+
 export type Aff<E, A> = HKT2<IsAff, E, A>;
 
 // A pure asynchronous computation, having no effects other than

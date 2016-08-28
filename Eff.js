@@ -6,7 +6,9 @@ import type { Monad } from './Monad'
 class IsEff {}
 
 export type EffV<A> = () => A;
+
 export type Eff<E, A> = HKT2<IsEff, E, A>;
+
 export type Pure<A> = Eff<{}, A>;
 
 function prj<E, A>(fa: Eff<E, A>): EffV<A> {

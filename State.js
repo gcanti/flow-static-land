@@ -8,6 +8,7 @@ import * as tuple from './Tuple'
 class IsState {}
 
 export type StateV<S, A> = (s: S) => Tuple<A, S>;
+
 export type State<S, A> = HKT2<IsState, S, A>;
 
 export function inj<S, A>(a: StateV<S, A>): State<S, A> {

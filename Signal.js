@@ -24,6 +24,7 @@ export type SignalV<A> = {
   get(): A,
   set(a: A): void
 };
+
 export type Signal<A> = HKT<IsSignal, A>;
 
 export function inj<A>(a: SignalV<A>): Signal<A> {
@@ -97,8 +98,10 @@ export function concat<A>(x: Signal<A>, y: Signal<A>): Signal<A> {
   return out
 }
 
+const semigroupSignal = { concat }
+
 function mergeMaybes<A>(x: Maybe<Signal<A>>, y: Maybe<Signal<A>>): Maybe<Signal<A>> {
-  return maybe.concat({ concat }, x, y)
+  return maybe.getSemigroupMaybe(semigroupSignal).concat(x, y)
 }
 
 // Merge all signals inside a `Foldable`, returning a `Maybe` which will

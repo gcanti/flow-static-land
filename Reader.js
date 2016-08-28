@@ -8,6 +8,7 @@ import type { Monad } from './Monad'
 class IsReader {}
 
 export type ReaderV<E, A> = (e: E) => A;
+
 export type Reader<E, A> = HKT2<IsReader, E, A>;
 
 function inj<E, A>(a: ReaderV<E, A>): Reader<E, A> {

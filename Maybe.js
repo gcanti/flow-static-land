@@ -14,6 +14,7 @@ import { id } from './Identity'
 class IsMaybe {}
 
 export type MaybeV<A> = ?A;
+
 export type Maybe<A> = HKT<IsMaybe, A>;
 
 export function inj<A>(a: MaybeV<A>): Maybe<A> {
@@ -38,24 +39,26 @@ export function empty<A>(): Maybe<A> {
 
 export const pempty = empty
 
-export function concat<A>(semigroup: Semigroup<A>, fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {
-  const x = prj(fx)
-  const y = prj(fy)
-  if (x == null) {
-    return fy
+export function getSemigroupMaybe<A>(semigroup: Semigroup<A>): Semigroup<Maybe<A>> {
+  return {
+    concat(fx, fy) {
+      const x = prj(fx)
+      const y = prj(fy)
+      if (x == null) {
+        return fy
+      }
+      if (y == null) {
+        return fx
+      }
+      return of(semigroup.concat(x, y))
+    }
   }
-  if (y == null) {
-    return fx
-  }
-  return of(semigroup.concat(x, y))
 }
 
-export function getMonoid<A>(semigroup: Semigroup<A>): Monoid<Maybe<A>> {
+export function getMonoidMaybe<A>(semigroup: Semigroup<A>): Monoid<Maybe<A>> {
   return {
     empty,
-    concat(a, b) {
-      return concat(semigroup, a, b)
-    }
+    concat: getSemigroupMaybe(semigroup).concat
   }
 }
 
