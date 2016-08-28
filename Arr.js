@@ -21,14 +21,15 @@ import * as tuple from './Tuple'
 
 class IsArr {}
 
+export type ArrV<A> = Array<A>;
 export type Arr<A> = HKT<IsArr, A>;
 
-export function inj<A>(a: Array<A>): Arr<A> {
+export function inj<A>(a: ArrV<A>): Arr<A> {
   return ((a: any): Arr<A>)
 }
 
-export function prj<A>(fa: Arr<A>): Array<A> {
-  return ((fa: any): Array<A>)
+export function prj<A>(fa: Arr<A>): ArrV<A> {
+  return ((fa: any): ArrV<A>)
 }
 
 function copy<A>(as: Arr<A>): Array<A> {
@@ -244,6 +245,31 @@ export function catMaybes<A>(as: Arr<Maybe<A>>): Arr<A> {
 
 export function sort<A>(ord: Ord<A>, as: Arr<A>): Arr<A> {
   return inj(copy(as).sort(toNativeComparator(ord.compare)))
+}
+
+export class Do<A> {
+  static of(a: A): Do<A> {
+    return new Do(of(a))
+  }
+  static set(x: ArrV<A>): Do<A> {
+    return new Do(inj(x))
+  }
+  value: Arr<A>;
+  constructor(value: Arr<A>) {
+    this.value = value
+  }
+  map<B>(f: (a: A) => B): Do<B> {
+    return new Do(map(f, this.value))
+  }
+  ap<B>(fab: Arr<(a: A) => B>): Do<B> {
+    return new Do(ap(fab, this.value))
+  }
+  chain<B>(f: (a: A) => Arr<B>): Do<B> {
+    return new Do(chain(f, this.value))
+  }
+  extract(): ArrV<A> {
+    return prj(this.value)
+  }
 }
 
 if (false) { // eslint-disable-line

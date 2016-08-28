@@ -13,14 +13,15 @@ import { id } from './Identity'
 
 class IsMaybe {}
 
+export type MaybeV<A> = ?A;
 export type Maybe<A> = HKT<IsMaybe, A>;
 
-export function inj<A>(a: ?A): Maybe<A> {
+export function inj<A>(a: MaybeV<A>): Maybe<A> {
   return ((a: any): Maybe<A>)
 }
 
-export function prj<A>(fa: Maybe<A>): ?A {
-  return ((fa: any): ?A)
+export function prj<A>(fa: Maybe<A>): MaybeV<A> {
+  return ((fa: any): MaybeV<A>)
 }
 
 export function isNothing<A>(x: Maybe<A>): boolean {
@@ -127,6 +128,45 @@ export function fromJust<A>(fa: Maybe<A>): A {
     throw new Error('fromJust returned a Nothing')
   }
   return a
+}
+
+/*
+
+  Do notation (experimental)
+
+  Example:
+
+  import * as maybe from '../Maybe'
+
+  const x: Maybe<number> = maybe.Do.of(3)
+    .map(n => n * 2)
+    .chain(n => maybe.of(n - 1))
+    .value
+
+*/
+export class Do<A> {
+  static of(a: A): Do<A> {
+    return new Do(of(a))
+  }
+  static set(x: MaybeV<A>): Do<A> {
+    return new Do(inj(x))
+  }
+  value: Maybe<A>;
+  constructor(value: Maybe<A>) {
+    this.value = value
+  }
+  map<B>(f: (a: A) => B): Do<B> {
+    return new Do(map(f, this.value))
+  }
+  ap<B>(fab: Maybe<(a: A) => B>): Do<B> {
+    return new Do(ap(fab, this.value))
+  }
+  chain<B>(f: (a: A) => Maybe<B>): Do<B> {
+    return new Do(chain(f, this.value))
+  }
+  extract(): MaybeV<A> {
+    return prj(this.value)
+  }
 }
 
 if (false) { // eslint-disable-line
