@@ -1,7 +1,5 @@
 // @flow
-import { HKT } from './HKT'
 import type { HKT2 } from './HKT'
-import { unsafeCoerce } from './Unsafe'
 import type { Bifunctor } from './Bifunctor'
 import type { Monad } from './Monad'
 import type { Alt } from './Alt'
@@ -10,6 +8,9 @@ import type { Foldable } from './Foldable'
 import type { Applicative } from './Applicative'
 import type { Traversable } from './Traversable'
 import type { Semigroup } from './Semigroup'
+
+import { HKT } from './HKT'
+import { unsafeCoerce } from './Unsafe'
 
 class IsEither {}
 
@@ -28,7 +29,10 @@ export class Right<R> {
 }
 
 export type EitherV<L, R> = Left<L> | Right<R>;
+
 export type Either<L, R> = HKT2<IsEither, L, R>;
+
+export type EitherF = HKT<IsEither, *>;
 
 function inj<L, R>(e: EitherV<L, R>): Either<L, R> {
   return ((e: any): Either<L, R>)
@@ -141,6 +145,22 @@ export function getSemigroup<L, R>(semigroup: Semigroup<R>): Semigroup<Either<L,
   }
 }
 
+export class Do<L, A> {
+  static of(a: A): Do<L, A> {
+    return new Do(of(a))
+  }
+  value: Either<L, A>;
+  constructor(value: Either<L, A>) {
+    this.value = value
+  }
+  map<B>(f: (a: A) => B): Do<L, B> {
+    return new Do(map(f, this.value))
+  }
+  chain<B>(f: (a: A) => Either<L, B>): Do<L, B> {
+    return new Do(chain(f, this.value))
+  }
+}
+
 if (false) { // eslint-disable-line
   ({
     map,
@@ -152,10 +172,10 @@ if (false) { // eslint-disable-line
     extend,
     reduce,
     sequence
-  }: Monad<HKT<IsEither, *>> &
+  }: Monad<EitherF> &
      Bifunctor<IsEither> &
-     Alt<HKT<IsEither, *>> &
-     Extend<HKT<IsEither, *>> &
-     Foldable<HKT<IsEither, *>> &
-     Traversable<HKT<IsEither, *>>)
+     Alt<EitherF> &
+     Extend<EitherF> &
+     Foldable<EitherF> &
+     Traversable<EitherF>)
 }
