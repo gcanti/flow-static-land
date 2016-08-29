@@ -252,9 +252,6 @@ export class Do<A> {
   static of(a: A): Do<A> {
     return new Do(of(a))
   }
-  static set(x: ArrV<A>): Do<A> {
-    return new Do(inj(x))
-  }
   value: Arr<A>;
   constructor(value: Arr<A>) {
     this.value = value
@@ -262,14 +259,8 @@ export class Do<A> {
   map<B>(f: (a: A) => B): Do<B> {
     return new Do(map(f, this.value))
   }
-  ap<B>(fab: Arr<(a: A) => B>): Do<B> {
-    return new Do(ap(fab, this.value))
-  }
   chain<B>(f: (a: A) => Arr<B>): Do<B> {
     return new Do(chain(f, this.value))
-  }
-  extract(): ArrV<A> {
-    return prj(this.value)
   }
 }
 

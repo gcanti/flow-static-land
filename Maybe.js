@@ -151,9 +151,6 @@ export class Do<A> {
   static of(a: A): Do<A> {
     return new Do(of(a))
   }
-  static set(x: MaybeV<A>): Do<A> {
-    return new Do(inj(x))
-  }
   value: Maybe<A>;
   constructor(value: Maybe<A>) {
     this.value = value
@@ -161,14 +158,8 @@ export class Do<A> {
   map<B>(f: (a: A) => B): Do<B> {
     return new Do(map(f, this.value))
   }
-  ap<B>(fab: Maybe<(a: A) => B>): Do<B> {
-    return new Do(ap(fab, this.value))
-  }
   chain<B>(f: (a: A) => Maybe<B>): Do<B> {
     return new Do(chain(f, this.value))
-  }
-  extract(): MaybeV<A> {
-    return prj(this.value)
   }
 }
 
