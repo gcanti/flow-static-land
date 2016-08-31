@@ -26,15 +26,15 @@ export function unsafeCompare(x: any, y: any): Ordering {
   return x < y ? 'LT' : x > y ? 'GT' : 'EQ'
 }
 
-export const ordBoolean: Ord<boolean> = Object.assign({}, {
+export const booleanOrd: Ord<boolean> = Object.assign({}, {
   compare: unsafeCompare
 }, setoidBoolean)
 
-export const ordNumber: Ord<number> = Object.assign({}, {
+export const numberOrd: Ord<number> = Object.assign({}, {
   compare: unsafeCompare
 }, setoidNumber)
 
-export const ordString: Ord<string> = Object.assign({}, {
+export const stringOrd: Ord<string> = Object.assign({}, {
   compare: unsafeCompare
 }, setoidString)
 

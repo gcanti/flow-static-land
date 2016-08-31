@@ -3,7 +3,7 @@ import * as arr from '../Arr'
 import * as maybe from '../Maybe'
 import * as tuple from '../Tuple'
 import assert from 'assert'
-import { ordNumber } from '../Ord'
+import { numberOrd } from '../Ord'
 
 declare var describe: Function;
 declare var it: Function;
@@ -127,7 +127,7 @@ describe('Arr', () => {
   })
 
   it('sort', () => {
-    assert.deepEqual(arr.sort(ordNumber, arr.inj([3, 2, 1])), [1, 2, 3])
+    assert.deepEqual(arr.sort(numberOrd, arr.inj([3, 2, 1])), [1, 2, 3])
   })
 
 
