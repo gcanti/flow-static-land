@@ -1,9 +1,10 @@
 // @flow
-import { HKT } from './HKT'
 import type { HKT2 } from './HKT'
+import type { Monad } from './Monad'
+
+import { HKT } from './HKT'
 import { compose } from './Fun'
 import { id } from './Identity'
-import type { Monad } from './Monad'
 
 class IsReader {}
 
@@ -11,11 +12,11 @@ export type ReaderV<E, A> = (e: E) => A;
 
 export type Reader<E, A> = HKT2<IsReader, E, A>;
 
-function inj<E, A>(a: ReaderV<E, A>): Reader<E, A> {
+export function inj<E, A>(a: ReaderV<E, A>): Reader<E, A> {
   return ((a: any): Reader<E, A>)
 }
 
-function prj<E, A>(fa: Reader<E, A>): ReaderV<E, A> {
+export function prj<E, A>(fa: Reader<E, A>): ReaderV<E, A> {
   return ((fa: any): ReaderV<E, A>)
 }
 
