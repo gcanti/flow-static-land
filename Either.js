@@ -34,7 +34,7 @@ export type Either<L, R> = HKT2<IsEither, L, R>;
 
 export type EitherF = HKT<IsEither, *>;
 
-function inj<L, R>(e: EitherV<L, R>): Either<L, R> {
+export function inj<L, R>(e: EitherV<L, R>): Either<L, R> {
   return ((e: any): Either<L, R>)
 }
 
