@@ -77,8 +77,7 @@ export function of<A>(a: A): Maybe<A> {
 }
 
 export function chain<A, B>(f: (a: A) => Maybe<B>, fa: Maybe<A>): Maybe<B> {
-  const a = prj(fa)
-  return a == null ? Nothing : f(a)
+  return maybe(Nothing, f, fa)
 }
 
 export const Nothing: Maybe<any> = inj(null)
@@ -117,8 +116,7 @@ export function getSetoid<A>(setoid: Setoid<A>): Setoid<Maybe<A>> {
 }
 
 export function maybe<A, B>(b: B, f: (a: A) => B, fa: Maybe<A>): B {
-  const a = prj(fa)
-  return a == null ? b : f(a)
+  return reduce((_, a) => f(a), b, fa)
 }
 
 export function fromMaybe<A>(a: A, fa: Maybe<A>): A {

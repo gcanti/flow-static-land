@@ -9,7 +9,9 @@ import {
   of,
   maybe,
   fromMaybe,
-  getMonoidMaybe
+  getMonoidMaybe,
+  maybe as maybef,
+  chain
 } from '../Maybe'
 
 describe('Maybe', () => {
@@ -30,6 +32,16 @@ describe('Maybe', () => {
     assert.strictEqual(concat(Nothing, of(1)), 1)
     assert.strictEqual(concat(of(2), Nothing), 2)
     assert.strictEqual(concat(of(2), of(1)), 3)
+  })
+
+  it('maybe', () => {
+    assert.strictEqual(maybef(3, n => n * 2, of(2)), 4)
+    assert.strictEqual(maybef(3, n => n * 2, Nothing), 3)
+  })
+
+  it('chain', () => {
+    assert.strictEqual(chain(n => of(n * 2), of(2)), 4)
+    assert.strictEqual(chain(() => Nothing, of(2)), Nothing)
   })
 
 })
