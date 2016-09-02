@@ -2,9 +2,9 @@
 import type { Setoid } from './Setoid'
 import type { Ordering } from './Ordering'
 import {
-  setoidBoolean,
-  setoidNumber,
-  setoidString
+  booleanSetoid,
+  numberSetoid,
+  stringSetoid
 } from './Setoid'
 
 export type Comparator<A> = (x: A, y: A) => Ordering;
@@ -28,15 +28,15 @@ export function unsafeCompare(x: any, y: any): Ordering {
 
 export const booleanOrd: Ord<boolean> = Object.assign({}, {
   compare: unsafeCompare
-}, setoidBoolean)
+}, booleanSetoid)
 
 export const numberOrd: Ord<number> = Object.assign({}, {
   compare: unsafeCompare
-}, setoidNumber)
+}, numberSetoid)
 
 export const stringOrd: Ord<string> = Object.assign({}, {
   compare: unsafeCompare
-}, setoidString)
+}, stringSetoid)
 
 export function lessThan<A>(ord: Ord<A>, x: A, y: A): boolean {
   return ord.compare(x, y) === 'LT'

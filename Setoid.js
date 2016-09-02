@@ -7,14 +7,14 @@ export function strictEquals(a: any, b: any): boolean {
   return a === b
 }
 
-export const setoidBoolean: Setoid<boolean> = {
+export const booleanSetoid: Setoid<boolean> = {
   equals: strictEquals
 }
 
-export const setoidNumber: Setoid<number> = {
+export const numberSetoid: Setoid<number> = {
   equals: strictEquals
 }
 
-export const setoidString: Setoid<string> = {
+export const stringSetoid: Setoid<string> = {
   equals: strictEquals
 }
