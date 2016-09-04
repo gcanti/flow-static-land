@@ -34,8 +34,16 @@ export function cons<F, A>(ffa: HKT<F, Free<F, A>>): Free<F, A> {
   return inj(new Cons(ffa))
 }
 
-export function liftF<F, A>(functor: Functor<F>, fa: HKT<F, A>): Free<F, A> {
+export function liftFree<F, A>(functor: Functor<F>, fa: HKT<F, A>): Free<F, A> {
   return cons(functor.map(of, fa))
+}
+
+export function foldFree<F, A>(functor: Functor<F>, join: (fa: HKT<F, A>) => A, ffa: Free<F, A>): A {
+  const fa = prj(ffa)
+  if (fa instanceof Nil) {
+    return fa.value0
+  }
+  return join(functor.map(x => foldFree(functor, join, x), fa.value0))
 }
 
 export function freeMonad<F>(functor: Functor<F>): Monad<HKT<IsFree, F>> {
