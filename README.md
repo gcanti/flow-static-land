@@ -14,9 +14,9 @@ cd flow-static-land
 npm install
 npm start
 
-# execute ./node_modules/.bin/babel-node example/index.js
-# or open the page example/index.html in a browser
-# then edit example/index.js
+# execute ./node_modules/.bin/babel-node playground/index.js
+# or open the page playground/index.html in a browser
+# then edit playground/index.js
 ```
 
 # Examples

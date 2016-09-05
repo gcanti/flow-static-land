@@ -1,4 +1,5 @@
 *.log
 node_modules
 dev
-example
+playground
+exercises
