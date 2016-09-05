@@ -11,4 +11,5 @@
 import type { Ord } from '../Ord'
 
 export function isSorted<A>(xs: Array<A>, ord: Ord<A>): boolean {
+  throw 'not implemented'
 }
