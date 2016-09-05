@@ -13,7 +13,7 @@ export function binarySearch<A>(xs: Array<A>, x: A, ord: Ord<A>): number {
     if (ord.equals(d, x)) {
       return mid2
     }
-    else if (ord.compare(d, x) === 'GT') {
+    if (ord.compare(d, x) === 'GT') {
       return go(low, mid2, mid2 - 1)
     }
     return go(mid2 + 1, mid2, high)

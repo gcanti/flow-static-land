@@ -23,7 +23,7 @@ export function binarySearch(xs: Array<number>, x: number): number {
     if (d === x) {
       return mid2
     }
-    else if (d > x) {
+    if (d > x) {
       return go(low, mid2, mid2 - 1)
     }
     return go(mid2 + 1, mid2, high)
