@@ -7,14 +7,14 @@ class IsList {}
 
 class Cons<A> {
   head: A;
-  tail: List<A>;
-  constructor(head: A, tail: List<A>) {
+  tail: ListV<A>;
+  constructor(head: A, tail: ListV<A>) {
     this.head = head
     this.tail = tail
   }
 }
 
-const Nil = inj(null)
+const Nil: List<any> = inj(null)
 
 type ListV<A> = null | Cons<A>;
 
@@ -30,12 +30,15 @@ export function prj<A>(fa: List<A>): ListV<A> {
 
 export function map<A, B>(f: (a: A) => B, fa: List<A>): List<B> {
   const a = prj(fa)
-  return inj(a === null ? null : new Cons(f(a.head), map(f, a.tail)))
+  if (a === null) {
+    return Nil
+  }
+  return inj(new Cons(f(a.head), prj(map(f, inj(a.tail)))))
 }
 
 // let's prove it
 ({ map }: Functor<IsList>)
 
-const x = new Cons(1, new Cons(2, Nil))
+const x = inj(new Cons(1, new Cons(2, null)))
 
 console.log(map(n => n * 2, x)) // => Cons(2, Cons(4, null))
