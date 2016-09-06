@@ -40,7 +40,7 @@ export function map<A, B, C>(f: (a: A) => B, fa: Tuple<C, A>): Tuple<C, B> {
 
 export function bimap<A, B, C, D>(f: (a: A) => B, g: (c: C) => D, fac: Tuple<A, C>): Tuple<B, D> {
   const ac = prj(fac)
-  return inj([f(ac[0], g(ac[1]))])
+  return inj([f(ac[0]), g(ac[1])])
 }
 
 export function extend<X, A, B>(f: (ea: Tuple<X, A>) => B, ea: Tuple<X, A>): Tuple<X, B> {
