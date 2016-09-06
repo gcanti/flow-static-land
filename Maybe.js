@@ -39,7 +39,7 @@ export function empty<A>(): Maybe<A> {
 
 export const pempty = empty
 
-export function getSemigroupMaybe<A>(semigroup: Semigroup<A>): Semigroup<Maybe<A>> {
+export function getSemigroup<A>(semigroup: Semigroup<A>): Semigroup<Maybe<A>> {
   return {
     concat(fx, fy) {
       const x = prj(fx)
@@ -55,10 +55,10 @@ export function getSemigroupMaybe<A>(semigroup: Semigroup<A>): Semigroup<Maybe<A
   }
 }
 
-export function getMonoidMaybe<A>(semigroup: Semigroup<A>): Monoid<Maybe<A>> {
+export function getMonoid<A>(semigroup: Semigroup<A>): Monoid<Maybe<A>> {
   return {
     empty,
-    concat: getSemigroupMaybe(semigroup).concat
+    concat: getSemigroup(semigroup).concat
   }
 }
 

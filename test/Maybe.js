@@ -9,7 +9,7 @@ import {
   of,
   maybe,
   fromMaybe,
-  getMonoidMaybe,
+  getMonoid,
   maybe as maybef,
   chain
 } from '../Maybe'
@@ -28,7 +28,7 @@ describe('Maybe', () => {
   })
 
   it('concat', () => {
-    const { concat } = getMonoidMaybe({ concat(x, y){ return x + y } })
+    const { concat } = getMonoid({ concat(x, y){ return x + y } })
     assert.strictEqual(concat(Nothing, of(1)), 1)
     assert.strictEqual(concat(of(2), Nothing), 2)
     assert.strictEqual(concat(of(2), of(1)), 3)

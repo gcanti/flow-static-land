@@ -98,10 +98,10 @@ export function concat<A>(x: Signal<A>, y: Signal<A>): Signal<A> {
   return out
 }
 
-const semigroupSignal = { concat }
+const semigroup = { concat }
 
 function mergeMaybes<A>(x: Maybe<Signal<A>>, y: Maybe<Signal<A>>): Maybe<Signal<A>> {
-  return maybe.getSemigroupMaybe(semigroupSignal).concat(x, y)
+  return maybe.getSemigroup(semigroup).concat(x, y)
 }
 
 // Merge all signals inside a `Foldable`, returning a `Maybe` which will
