@@ -11,6 +11,8 @@ export type Fn7<A, B, C, D, E, F, G, H> = (a: A, b: B, c: C, d: D, e: E, f: F, g
 export type Fn8<A, B, C, D, E, F, G, H, I> = (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H, ...rest: Array<void>) => I;
 export type Fn9<A, B, C, D, E, F, G, H, I, L> = (a: A, b: B, c: C, d: D, e: E, f: F, g: G, h: H, i: I, ...rest: Array<void>) => L;
 
+export type Endomorphism<A> = Fn1<A, A>;
+
 declare function compose<A, B, C>(bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, C>; // eslint-disable-line no-redeclare
 declare function compose<A, B, C, D>(cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, D>; // eslint-disable-line no-redeclare
 declare function compose<A, B, C, D, E>(de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, E>; // eslint-disable-line no-redeclare
