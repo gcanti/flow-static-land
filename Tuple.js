@@ -29,7 +29,7 @@ export function snd<A, B>(t: Tuple<A, B>): B {
   return prj(t)[1]
 }
 
-export function compose<B, C, D>(x: Tuple<C, D>, y: Tuple<B, C>): Tuple<B, D> {
+export function compose<A, B, C>(x: Tuple<B, C>, y: Tuple<A, B>): Tuple<A, C> {
   return inj([fst(y), snd(x)])
 }
 
