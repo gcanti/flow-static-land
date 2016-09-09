@@ -264,6 +264,8 @@ export class Do<A> {
   }
 }
 
+export type FreeMonoid<A> = Monoid<Arr<A>>;
+
 if (false) { // eslint-disable-line
   ({
     concat,
@@ -276,7 +278,9 @@ if (false) { // eslint-disable-line
     alt,
     pempty,
     sequence
-  }: Monoid<Arr<*>> &
+  }:
+     Monoid<Arr<*>> &
+     FreeMonoid<*> &
      Monad<IsArr> &
      Foldable<IsArr> &
      Alt<IsArr> &
