@@ -5,22 +5,26 @@ export interface Monoid<A> extends Semigroup<A> {
   empty(): A
 }
 
-export const booleanAndMonoid: Monoid<boolean> = {
+// Boolean monoid under conjunction
+export const all: Monoid<boolean> = {
   empty: () => true,
   concat: (x, y) => x && y
 }
 
-export const booleanOrMonoid: Monoid<boolean> = {
+// Boolean monoid under disjunction
+export const any: Monoid<boolean> = {
   empty: () => false,
   concat: (x, y) => x || y
 }
 
-export const numberAdditionMonoid: Monoid<number> = {
+// Monoid under addition
+export const sum: Monoid<number> = {
   empty: () => 0,
   concat: (x, y) => x + y
 }
 
-export const numberProductMonoid: Monoid<number> = {
+// Monoid under multiplication
+export const product: Monoid<number> = {
   empty: () => 1,
   concat: (x, y) => x * y
 }
