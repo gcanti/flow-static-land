@@ -101,13 +101,6 @@ const createThenLookupUser: (username: string) => Eff<{ read: DB, write: DB }, ?
 
 Download the source code with the command `npm i gcanti/flow-static-land#master`
 
-Add the following include to your `.flowconfig` file
-
-```
-[include]
-./node_modules/flow-static-land/
-```
-
 **Bundles**
 
 In order to build a bundle, add the following plugins to your `.babelrc` file
