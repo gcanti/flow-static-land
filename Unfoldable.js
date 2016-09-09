@@ -16,7 +16,7 @@ export interface Unfoldable<T> {
 
 // Replicate a value some natural number of times.
 export function replicate<T, A>(unfoldable: Unfoldable<T>, n: number, a: A): HKT<T, A> {
-  const step = (n: number): Maybe<Tuple<A, number>> => {
+  function step(n: number): Maybe<Tuple<A, number>> {
     return n <= 0 ? maybe.Nothing : maybe.of(inj([a, n - 1]))
   }
   return unfoldable.unfoldr(step, n)
