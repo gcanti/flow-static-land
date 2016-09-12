@@ -9,7 +9,7 @@
   Hint: use arr.unfoldr
 
 */
-import type { Arr } from '../Arr'
+import type { Arr } from '../src/Arr'
 
 export function evens(count: number): Arr<number> {
   throw 'not implemented'

@@ -6,16 +6,16 @@
 
 */
 
-import type { Applicative } from './Applicative'
-import type { Functor } from './Functor'
-import type { Semigroup } from './Semigroup'
-import type { Foldable } from './Foldable'
-import type { Maybe } from './Maybe'
-import type { Setoid } from './Setoid'
-import type { Predicate } from './Fun'
+import type { Applicative } from '../src/Applicative'
+import type { Functor } from '../src/Functor'
+import type { Semigroup } from '../src/Semigroup'
+import type { Foldable } from '../src/Foldable'
+import type { Maybe } from '../src/Maybe'
+import type { Setoid } from '../src/Setoid'
+import type { Predicate } from '../src/Fun'
 
-import { HKT } from './HKT'
-import * as maybe from './Maybe'
+import { HKT } from '../src/HKT'
+import * as maybe from '../src/Maybe'
 
 class IsSignal {}
 

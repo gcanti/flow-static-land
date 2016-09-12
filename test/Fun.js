@@ -8,7 +8,7 @@ import {
   compose,
   pipe,
   curry
-} from '../Fun'
+} from '../src/Fun'
 
 const f = (n: number) => n + 1
 const g = (n: number) => n * 2

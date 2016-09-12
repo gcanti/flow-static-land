@@ -1,10 +1,10 @@
 // @flow
 
-import type { Maybe } from '../Maybe'
-import * as maybe from '../Maybe'
+import type { Maybe } from '../src/Maybe'
+import * as maybe from '../src/Maybe'
 
-import type { Arr } from '../Arr'
-import * as arr from '../Arr'
+import type { Arr } from '../src/Arr'
+import * as arr from '../src/Arr'
 
 export function getAllJustsOrNothing<A>(xs: Arr<Maybe<A>>): Maybe<Arr<A>> {
   return arr.sequence(maybe, xs)

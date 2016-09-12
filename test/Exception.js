@@ -4,17 +4,17 @@ declare var describe: Function;
 declare var it: Function;
 
 import assert from 'assert'
-import type { Eff } from '../Eff'
-import { runEff, of } from '../Eff'
+import type { Eff } from '../src/Eff'
+import { runEff, of } from '../src/Eff'
 import {
   EXCEPTION,
   error,
   throwException,
   catchException,
   tryEff
-} from '../Exception'
-import type { Either } from '../Either'
-import { Left } from '../Either'
+} from '../src/Exception'
+import type { Either } from '../src/Either'
+import { Left } from '../src/Either'
 
 describe('Exception', () => {
 

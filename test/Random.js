@@ -4,12 +4,12 @@ declare var describe: Function;
 declare var it: Function;
 
 import assert from 'assert'
-import { runEff } from '../Eff'
+import { runEff } from '../src/Eff'
 import {
   randomInt,
   randomRange,
   randomBool
-} from '../Random'
+} from '../src/Random'
 
 describe('Random', () => {
 

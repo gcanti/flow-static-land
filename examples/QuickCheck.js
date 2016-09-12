@@ -6,20 +6,20 @@
 
 */
 
-import type { Eff } from './Eff'
-import * as eff from './Eff'
-import { CONSOLE } from './Console'
-import { RANDOM, random } from './Random'
-import { EXCEPTION, throwException, error } from './Exception'
-import type { State } from './State'
-import * as state from './State'
-import type { Arr } from './Arr'
-import * as arr from './Arr'
-import { log } from './Console'
-import type { Either } from './Either'
-import * as either from './Either'
-import { replicateA } from './Unfoldable'
-import * as tuple from './Tuple'
+import type { Eff } from '../src/Eff'
+import * as eff from '../src/Eff'
+import { CONSOLE } from '../src/Console'
+import { RANDOM, random } from '../src/Random'
+import { EXCEPTION, throwException, error } from '../src/Exception'
+import type { State } from '../src/State'
+import * as state from '../src/State'
+import type { Arr } from '../src/Arr'
+import * as arr from '../src/Arr'
+import { log } from '../src/Console'
+import type { Either } from '../src/Either'
+import * as either from '../src/Either'
+import { replicateA } from '../src/Unfoldable'
+import * as tuple from '../src/Tuple'
 
 /*
 

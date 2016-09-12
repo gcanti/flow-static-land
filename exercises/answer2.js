@@ -1,7 +1,7 @@
 // @flow
 
-import type { Ord } from '../Ord'
-import { greaterThan, numberOrd } from '../Ord'
+import type { Ord } from '../src/Ord'
+import { greaterThan, numberOrd } from '../src/Ord'
 
 export function isSorted<A>(xs: Array<A>, ord: Ord<A>): boolean {
   const len = xs.length

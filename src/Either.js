@@ -11,22 +11,13 @@ import type { Semigroup } from './Semigroup'
 
 import { HKT } from './HKT'
 import { unsafeCoerce } from './Unsafe'
+import { Data1 } from './Data'
 
 class IsEither {}
 
-export class Left<L> {
-  value0: L;
-  constructor(value0: L) {
-    this.value0 = value0
-  }
-}
+export class Left<L> extends Data1<L> {}
 
-export class Right<R> {
-  value0: R;
-  constructor(value0: R) {
-    this.value0 = value0
-  }
-}
+export class Right<R> extends Data1<R> {}
 
 export type EitherV<L, R> = Left<L> | Right<R>;
 
@@ -143,6 +134,14 @@ export function getSemigroup<L, R>(semigroup: Semigroup<R>): Semigroup<Either<L,
       return a
     }
   }
+}
+
+export function either<L, R, C>(f: (l: L) => C, g: (r: R) => C, fa: Either<L, R>): C {
+  const a = prj(fa)
+  if (a instanceof Left) {
+    return f(a.value0)
+  }
+  return g(a.value0)
 }
 
 export class Do<L, A> {

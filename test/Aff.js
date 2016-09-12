@@ -9,7 +9,7 @@ import type {
   SuccessHandler,
   Aff,
   Canceler
-} from '../Aff'
+} from '../src/Aff'
 import {
   inj,
   runAff,
@@ -18,21 +18,21 @@ import {
   of,
   ap,
   chain
-} from '../Aff'
+} from '../src/Aff'
 import {
   error,
   CONSOLE
-} from '../Console'
+} from '../src/Console'
 import {
   throwException,
   EXCEPTION
-} from '../Exception'
+} from '../src/Exception'
 import type {
   Eff
-} from '../Eff'
+} from '../src/Eff'
 import {
   runEff
-} from '../Eff'
+} from '../src/Eff'
 
 function testAff(aff, expected) {
   const e: ErrorHandler<{ err: EXCEPTION }> = throwException

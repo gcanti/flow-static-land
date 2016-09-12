@@ -4,7 +4,7 @@ declare var describe: Function;
 declare var it: Function;
 
 import assert from 'assert'
-import type { Signal } from '../Signal'
+import type { Signal } from '../examples/Signal'
 import {
   prj,
   of,
@@ -15,7 +15,7 @@ import {
   sampleOn,
   dropRepeats,
   filter
-} from '../Signal'
+} from '../examples/Signal'
 
 function next<A>(fa: Signal<A>, a: A): void {
   prj(fa).set(a)

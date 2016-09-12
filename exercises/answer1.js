@@ -1,7 +1,7 @@
 // @flow
 
-import type { Ord } from '../Ord'
-import { numberOrd, stringOrd } from '../Ord'
+import type { Ord } from '../src/Ord'
+import { numberOrd, stringOrd } from '../src/Ord'
 
 export function binarySearch<A>(xs: Array<A>, x: A, ord: Ord<A>): number {
   function go(low: number, mid: number, high: number): number {

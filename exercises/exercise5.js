@@ -10,8 +10,8 @@
   Just with a list of all the values
 
 */
-import type { Arr } from '../Arr'
-import type { Maybe } from '../Maybe'
+import type { Arr } from '../src/Arr'
+import type { Maybe } from '../src/Maybe'
 
 export function getAllJustsOrNothing<A>(xs: Arr<Maybe<A>>): Maybe<Arr<A>> {
   throw 'not implemented'

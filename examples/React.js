@@ -1,8 +1,8 @@
 // @flow
-import { HKT } from './HKT'
-import type { Contravariant } from './Contravariant'
-import type { Arr } from './Arr'
-import * as arr from './Arr'
+import { HKT } from '../src/HKT'
+import type { Contravariant } from '../src/Contravariant'
+import type { Arr } from '../src/Arr'
+import * as arr from '../src/Arr'
 import React from 'react'
 
 class IsReactComponent {}

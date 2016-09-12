@@ -12,7 +12,7 @@ import {
   getMonoid,
   maybe as maybef,
   chain
-} from '../Maybe'
+} from '../src/Maybe'
 
 describe('Maybe', () => {
 

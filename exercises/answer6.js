@@ -1,9 +1,9 @@
 // @flow
 
-import type { Arr } from '../Arr'
-import * as arr from '../Arr'
-import * as maybe from '../Maybe'
-import * as tuple from '../Tuple'
+import type { Arr } from '../src/Arr'
+import * as arr from '../src/Arr'
+import * as maybe from '../src/Maybe'
+import * as tuple from '../src/Tuple'
 
 export function evens(count: number): Arr<number> {
   return arr.unfoldr(n => {

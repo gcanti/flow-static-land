@@ -1,7 +1,7 @@
 // @flow
 
-import { HKT } from '../HKT'
-import type { Functor } from '../Functor'
+import { HKT } from '../src/HKT'
+import type { Functor } from '../src/Functor'
 
 class IsList {}
 

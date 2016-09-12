@@ -1,7 +1,7 @@
 // @flow
 
-import type { Maybe } from '../Maybe'
-import * as maybe from '../Maybe'
+import type { Maybe } from '../src/Maybe'
+import * as maybe from '../src/Maybe'
 
 export function head<A>(xs: Array<A>): Maybe<A> {
   if (xs.length) {
@@ -13,8 +13,8 @@ export function head<A>(xs: Array<A>): Maybe<A> {
 console.log(head([1, 2, 3])) // => 1
 console.log(head([])) // => null
 
-import type { Either } from '../Either'
-import * as either from '../Either'
+import type { Either } from '../src/Either'
+import * as either from '../src/Either'
 
 export function elementAt<A>(xs: Array<A>, i: number): Either<string, A> {
   if (i < 0) {

@@ -8,7 +8,7 @@
 
 */
 
-import type { Ord } from '../Ord'
+import type { Ord } from '../src/Ord'
 
 export function isSorted<A>(xs: Array<A>, ord: Ord<A>): boolean {
   throw 'not implemented'

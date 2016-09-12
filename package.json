@@ -1,11 +1,16 @@
 {
   "name": "flow-static-land",
-  "version": "0.1.0",
-  "description": "Implementation of common algebraic types in JavaScript + Flow based on static-land",
+  "version": "0.0.1",
+  "description": "Implementation of common algebraic types in JavaScript + Flow",
+  "files": [
+    "lib",
+    "src"
+  ],
   "scripts": {
     "dev": "webpack --config=dev/webpack.config.js --watch --progress",
-    "start": "webpack --config=playground/webpack.config.js --watch --progress",
-    "test": "mocha --compilers js:babel-register"
+    "lint": "eslint src test",
+    "test": "mocha --compilers js:babel-register",
+    "build": "rm -rf lib/* && babel src -d lib && flow-copy-source -v src lib"
   },
   "repository": {
     "type": "git",
@@ -25,21 +30,25 @@
     "babel-plugin-transform-class-properties": "^6.11.5",
     "babel-plugin-transform-flow-strip-types": "^6.8.0",
     "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
     "eslint": "^2.12.0",
     "eslint-plugin-flow-vars": "^0.4.0",
+    "flow-copy-source": "^1.1.0",
     "mocha": "^3.0.2"
   },
   "tags": [
     "flow",
     "flowtype",
-    "static-land",
+    "static land",
+    "fantasy land",
     "algebraic types",
     "functional programming"
   ],
   "keywords": [
     "flow",
     "flowtype",
-    "static-land",
+    "static land",
+    "fantasy land",
     "algebraic types",
     "functional programming"
   ]

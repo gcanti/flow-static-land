@@ -5,7 +5,7 @@ import type { Either, EitherF } from './Either'
 
 import * as either from './Either'
 
-export function validationApplicative<L>(semigroup: Semigroup<L>): Applicative<EitherF> {
+export function getApplicative<L>(semigroup: Semigroup<L>): Applicative<EitherF> {
   function ap<A, B>(fab: Either<L, (a: A) => B>, fa: Either<L, A>): Either<L, B> {
     const ab = either.prj(fab)
     const a = either.prj(fa)

@@ -2,35 +2,15 @@
 
 - statically type checked by [Flow](https://flowtype.org/)
 - PureScript-like standard library
-- static land compatible ([Specification](https://github.com/rpominov/static-land))
+- [static land](https://github.com/rpominov/static-land) compatible
 
 The idea (faking higher kinded types in Flow) is based on the paper [Lightweight higher-kinded polymorphism](https://www.cl.cam.ac.uk/~jdy22/papers/lightweight-higher-kinded-polymorphism.pdf) and [elm-brands](https://github.com/joneshf/elm-brands).
 
-# Try it out
-
-```
-git clone https://github.com/gcanti/flow-static-land.git
-cd flow-static-land
-npm install
-npm start
-
-# execute ./node_modules/.bin/babel-node playground/index.js
-# or open the page playground/index.html in a browser
-# then edit playground/index.js
-```
-
-# Examples
-
-Real world examples
-
-- a Signal library ([purescript-signal](https://github.com/bodil/purescript-signal) porting)
-- a QuickCheck library ([purescript-quickcheck](https://github.com/purescript/purescript-quickcheck) partial porting)
-
-## `Maybe` and `Arr`
+# Example
 
 ```js
-import * as maybe from 'flow-static-land/Maybe'
-import * as arr from 'flow-static-land/Arr'
+import * as maybe from 'flow-static-land/lib/Maybe'
+import * as arr from 'flow-static-land/lib/Arr'
 
 const f = (n) => n * 2
 const g = (n) => n + 1
@@ -63,47 +43,28 @@ const f = (n) => n * 2
                  ^^^^^ number
 ```
 
-## Expressing side effects with the `Eff` monad
+# Related blog posts
 
-See this [blog post](https://medium.com/@gcanti/the-eff-monad-implemented-in-flow-40803670c3eb#.sj4m00hpe) for context
+- [Higher kinded types with Flow](https://medium.com/@gcanti/higher-kinded-types-in-flow-275b657992b7)
+- [Expressing side effects with the `Eff` monad](https://medium.com/@gcanti/the-eff-monad-implemented-in-flow-40803670c3eb)
+- [Phantom types with Flow](https://medium.com/@gcanti/phantom-types-with-flow-828aff73232b)
+- [Refinements with Flow](https://medium.com/@gcanti/refinements-with-flow-9c7eeae8478b)
 
-```js
-import type { Eff } from 'flow-static-land/Eff'
-import { inj } from 'flow-static-land/Eff'
+# More examples
 
-class DB {}
+`examples` directory:
 
-type User = {
-  username: string,
-  uid: number
-};
-
-const users = {}
-let uid = 0
-
-function createUser(username: string): Eff<{ write: DB }, User> {
-  return inj(() => {
-    users[username] = { username, uid: ++uid }
-    return users[username]
-  })
-}
-
-function lookupUser(username: string): Eff<{ read: DB }, ?User> {
-  return inj(() => users[username])
-}
-
-// the signature shows that createThenLookupUser will read and write to the db
-const createThenLookupUser: (username: string) => Eff<{ read: DB, write: DB }, ?User> =
-  username => chain(user => lookupUser(user.username), createUser(username))
-```
+- a Signal library ([purescript-signal](https://github.com/bodil/purescript-signal) porting)
+- a QuickCheck library ([purescript-quickcheck](https://github.com/purescript/purescript-quickcheck) partial porting)
+- a React library (experimental)
 
 # Setup
 
-Download the source code with the command `npm i gcanti/flow-static-land#master`
+```sh
+npm install flow-static-land --save
+```
 
-**Bundles**
-
-In order to build a bundle, add the following plugins to your `.babelrc` file
+Babel config
 
 ```
 {
@@ -116,15 +77,6 @@ In order to build a bundle, add the following plugins to your `.babelrc` file
 }
 ```
 
-For webpack, add the following include to your babel loader
+# License
 
-```js
-{
-  loader: 'babel',
-  include: [
-    path.resolve(__dirname, "node_modules/flow-static-land"),
-    path.resolve(__dirname, "path/to/your/code")
-  ]
-}
-```
-
+The MIT License (MIT)

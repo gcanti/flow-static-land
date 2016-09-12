@@ -1,9 +1,9 @@
 // @flow
-import * as arr from '../Arr'
-import * as maybe from '../Maybe'
-import * as tuple from '../Tuple'
+import * as arr from '../src/Arr'
+import * as maybe from '../src/Maybe'
+import * as tuple from '../src/Tuple'
 import assert from 'assert'
-import { numberOrd } from '../Ord'
+import { numberOrd } from '../src/Ord'
 
 declare var describe: Function;
 declare var it: Function;
