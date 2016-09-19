@@ -4,6 +4,8 @@ import type { Functor } from './Functor'
 import type { Foldable } from './Foldable'
 import type { Applicative } from './Applicative'
 
+import { id } from './Identity'
+
 // `Traversable` represents data structures which can be _traversed_,
 // accumulating results and effects in some `Applicative` functor.
 //
@@ -12,13 +14,12 @@ import type { Applicative } from './Applicative'
 // - `sequence` runs the actions _contained_ in a data structure,
 //   and accumulates the results.
 export interface Traversable<T> extends Functor<T>, Foldable<T> {
-  sequence<F, A>(applicative: Applicative<F>, tfa: HKT<T, HKT<F, A>>): HKT<F, HKT<T, A>>
+  traverse<F, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<F, B>, ta: HKT<T, A>): HKT<F, HKT<T, B>>;
 }
 
-export function traverse<F, T, A, B>(
+export function sequence<F, T, A>(
   applicative: Applicative<F>,
   traversable: Traversable<T>,
-  f: (a: A) => HKT<F, B>,
-  ta: HKT<T, A>): HKT<F, HKT<T, B>> {
-  return traversable.sequence(applicative, traversable.map(f, ta))
+  tfa: HKT<T, HKT<F, A>>): HKT<F, HKT<T, A>> {
+  return traversable.traverse(applicative, id, tfa)
 }

@@ -12,53 +12,55 @@ import type { Alt } from './Alt'
 import type { Extend } from './Extend'
 import type { Comonad } from './Comonad'
 
-class Identity {}
+class IsIdentity {}
 
-function prj<A>(fa: HKT<Identity, A>): A {
+export type Identity<A> = HKT<IsIdentity, A>;
+
+function prj<A>(fa: HKT<IsIdentity, A>): A {
   return ((fa: any): A)
 }
 
-function inj<A>(a: A): HKT<Identity, A> {
-  return ((a: any): HKT<Identity, A>)
+function inj<A>(a: A): HKT<IsIdentity, A> {
+  return ((a: any): HKT<IsIdentity, A>)
 }
 
 export function id<A>(a: A): A {
   return a
 }
 
-export function map<A, B>(f: (a: A) => B, fa: HKT<Identity, A>): HKT<Identity, B> {
+export function map<A, B>(f: (a: A) => B, fa: Identity<A>): Identity<B> {
   return inj(f(prj(fa)))
 }
 
-export function ap<A, B>(fab: HKT<Identity, (a: A) => B>, fa: HKT<Identity, A>): HKT<Identity, B> {
+export function ap<A, B>(fab: Identity<(a: A) => B>, fa: Identity<A>): Identity<B> {
   return map(prj(fab), fa)
 }
 
 export const of = inj
 
-export function chain<A, B>(f: (a: A) => HKT<Identity, B>, fa: HKT<Identity, A>): HKT<Identity, B> {
+export function chain<A, B>(f: (a: A) => Identity<B>, fa: Identity<A>): Identity<B> {
   return f(prj(fa))
 }
 
-export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: HKT<Identity, B>): A {
+export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Identity<B>): A {
   return f(a, prj(fb))
 }
 
-export function alt<A>(fx: HKT<Identity, A>, fy: HKT<Identity, A>): HKT<Identity, A> { // eslint-disable-line no-unused-vars
+export function alt<A>(fx: Identity<A>, fy: Identity<A>): Identity<A> { // eslint-disable-line no-unused-vars
   return fx
 }
 
-export function sequence<F, A>(applicative: Applicative<F>, tfa: HKT<Identity, HKT<F, A>>): HKT<F, HKT<Identity, A>> {
-  return applicative.map(of, prj(tfa))
+export function traverse<F, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<F, B>, ta: Identity<A>): HKT<F, Identity<B>> {
+  return applicative.map(of, f(prj(ta)))
 }
 
-export function extend<A, B>(f: (ea: HKT<Identity, A>) => B, ea: HKT<Identity, A>): HKT<Identity, B> {
+export function extend<A, B>(f: (ea: Identity<A>) => B, ea: Identity<A>): Identity<B> {
   return of(f(ea))
 }
 
 export const extract = prj
 
-export function getSetoid<A>(setoid: Setoid<A>): Setoid<HKT<Identity, A>> {
+export function getSetoid<A>(setoid: Setoid<A>): Setoid<Identity<A>> {
   return {
     equals(fx, fy) {
       return setoid.equals(prj(fx), prj(fy))
@@ -66,7 +68,7 @@ export function getSetoid<A>(setoid: Setoid<A>): Setoid<HKT<Identity, A>> {
   }
 }
 
-export function getOrd<A>(ord: Ord<A>): Ord<HKT<Identity, A>> {
+export function getOrd<A>(ord: Ord<A>): Ord<Identity<A>> {
   return {
     equals: getSetoid(ord).equals,
     compare(fx, fy) {
@@ -75,7 +77,7 @@ export function getOrd<A>(ord: Ord<A>): Ord<HKT<Identity, A>> {
   }
 }
 
-export function getSemigroup<A>(semigroup: Semigroup<A>): Semigroup<HKT<Identity, A>> {
+export function getSemigroup<A>(semigroup: Semigroup<A>): Semigroup<Identity<A>> {
   return {
     concat(fx, fy) {
       return inj(semigroup.concat(prj(fx), prj(fy)))
@@ -83,7 +85,7 @@ export function getSemigroup<A>(semigroup: Semigroup<A>): Semigroup<HKT<Identity
   }
 }
 
-export function getMonoid<A>(monoid: Monoid<A>): Monoid<HKT<Identity, A>> {
+export function getMonoid<A>(monoid: Monoid<A>): Monoid<Identity<A>> {
   return {
     concat: getSemigroup(monoid).concat,
     empty() {
@@ -100,8 +102,13 @@ if (false) { // eslint-disable-line
     chain,
     reduce,
     alt,
-    sequence,
+    traverse,
     extend,
     extract
-  }: Monad<Identity> & Foldable<Identity> & Traversable<Identity> & Alt<Identity> & Extend<Identity> & Comonad<Identity>)
+  }: Monad<IsIdentity> &
+     Foldable<IsIdentity> &
+     Traversable<IsIdentity> &
+     Alt<IsIdentity> &
+     Extend<IsIdentity> &
+     Comonad<IsIdentity>)
 }

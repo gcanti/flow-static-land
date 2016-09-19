@@ -13,14 +13,15 @@ describe('Arr', () => {
   const as = arr.inj([1, 2, 3])
   const empty = arr.empty()
 
-  it('sequence', () => {
-    const tfaNothing = arr.inj([maybe.of(1), maybe.Nothing, maybe.of(2)])
-    const fasNothing = arr.sequence(maybe, tfaNothing)
+  it('traverse', () => {
+    const tfaNothing = arr.inj([1, 2])
+    const f = n => n % 2 === 0 ? maybe.Nothing : maybe.of(n)
+    const fasNothing = arr.traverse(maybe, f, tfaNothing)
     assert.ok(maybe.isNothing(fasNothing))
-    const tfa = arr.inj([maybe.of(1), maybe.of(2)])
-    const fas = arr.sequence(maybe, tfa)
+    const tfa = arr.inj([1, 3])
+    const fas = arr.traverse(maybe, f, tfa)
     assert.ok(maybe.isJust(fas))
-    assert.deepEqual(fas, [1, 2])
+    assert.deepEqual(fas, [1, 3])
   })
 
   it('unfoldr', () => {

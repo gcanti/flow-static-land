@@ -9,14 +9,16 @@ export type EffV<A> = () => A;
 
 export type Eff<E, A> = HKT2<IsEff, E, A>;
 
+export type EffF = HKT<IsEff, *>;
+
 export type Pure<A> = Eff<{}, A>;
 
-function prj<E, A>(fa: Eff<E, A>): EffV<A> {
-  return ((fa: any): EffV<A>)
+export function inj<E, A>(a: EffV<A>): Eff<E, A> {
+  return ((a: any): Eff<E, A>)
 }
 
-export function inj<E, A>(effv: EffV<A>): Eff<E, A> {
-  return ((effv: any): Eff<E, A>)
+export function prj<E, A>(fa: Eff<E, A>): EffV<A> {
+  return ((fa: any): EffV<A>)
 }
 
 export function runEff<E, A>(eff: Eff<E, A>): A {
@@ -49,5 +51,5 @@ if (false) { // eslint-disable-line
     ap,
     of,
     chain
-  }: Monad<HKT<IsEff, *>>)
+  }: Monad<EffF>)
 }

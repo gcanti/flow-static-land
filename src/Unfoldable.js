@@ -1,11 +1,13 @@
 // @flow
-import { HKT } from './HKT'
 import type { Maybe } from './Maybe'
-import * as maybe from './Maybe'
-import type { Tuple } from './Tuple'
-import { inj } from './Tuple'
 import type { Applicative } from './Applicative'
 import type { Traversable } from './Traversable'
+import type { Tuple } from './Tuple'
+
+import { HKT } from './HKT'
+import * as maybe from './Maybe'
+import { inj } from './Tuple'
+import { sequence } from './Traversable'
 import { constant } from './Fun'
 
 // This class identifies data structures which can be _unfolded_,
@@ -29,7 +31,7 @@ export function replicateA<M, F, A>(
     n: number,
     ma: HKT<M, A>
   ): HKT<M, HKT<F, A>> {
-  return unfoldableTraversable.sequence(applicative, replicate(unfoldableTraversable, n, ma))
+  return sequence(applicative, unfoldableTraversable, replicate(unfoldableTraversable, n, ma))
 }
 
 // The container with no elements - unfolded with zero iterations.

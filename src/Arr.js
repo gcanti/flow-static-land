@@ -18,6 +18,7 @@ import * as maybe from './Maybe'
 import { id } from './Identity'
 import { toNativeComparator } from './Ord'
 import * as tuple from './Tuple'
+import { liftA2 } from './Apply'
 
 class IsArr {}
 
@@ -67,12 +68,9 @@ export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Arr<B>): A {
   return prj(fb).reduce(f, a)
 }
 
-export function sequence<F, A>(applicative: Applicative<F>, tfa: Arr<HKT<F, A>>): HKT<F, Arr<A>> {
-  function f(fas: HKT<F, Arr<A>>, fa: HKT<F, A>): HKT<F, Arr<A>> {
-    const ffs = applicative.map(as => a => snoc(as, a), fas)
-    return applicative.ap(ffs, fa)
-  }
-  return reduce(f, applicative.of(empty()), tfa)
+export function traverse<F, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<F, B>, ta: Arr<A>): HKT<F, Arr<B>> {
+  const snocA2 = liftA2(applicative, snoc)
+  return reduce((fab, a) => snocA2(fab, f(a)), applicative.of(empty()), ta)
 }
 
 export function unfoldr<A, B>(f: (b: B) => Maybe<Tuple<A, B>>, b: B): Arr<A> {
@@ -277,7 +275,7 @@ if (false) { // eslint-disable-line
     reduce,
     alt,
     pempty,
-    sequence
+    traverse
   }:
      Monoid<Arr<*>> &
      FreeMonoid<*> &

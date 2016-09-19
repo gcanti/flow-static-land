@@ -1,6 +1,7 @@
 // @flow
 import { HKT } from './HKT'
 import type { Monoid } from './Monoid'
+import type { Applicative } from './Applicative'
 import type { Semigroup } from './Semigroup'
 import type { Monad } from './Monad'
 import type { Foldable } from './Foldable'
@@ -9,6 +10,7 @@ import type { Plus } from './Plus'
 import type { Alternative } from './Alternative'
 import type { Extend } from './Extend'
 import type { Setoid } from './Setoid'
+import type { Traversable } from './Traversable'
 import { id } from './Identity'
 
 class IsMaybe {}
@@ -107,6 +109,14 @@ export function equals<A>(setoid: Setoid<A>, fx: Maybe<A>, fy: Maybe<A>): boolea
   return false
 }
 
+export function traverse<F, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<F, B>, ta: Maybe<A>): HKT<F, Maybe<B>> {
+  const a = prj(ta)
+  if (a == null) {
+    return applicative.of(Nothing)
+  }
+  return applicative.map(of, f(a))
+}
+
 export function getSetoid<A>(setoid: Setoid<A>): Setoid<Maybe<A>> {
   return {
     equals(fx, fy) {
@@ -170,11 +180,13 @@ if (false) { // eslint-disable-line
     reduce,
     alt,
     pempty,
-    extend
+    extend,
+    traverse
   }: Monad<IsMaybe> &
      Foldable<IsMaybe> &
      Alt<IsMaybe> &
      Plus<IsMaybe> &
      Alternative<IsMaybe> &
-     Extend<IsMaybe>)
+     Extend<IsMaybe> &
+     Traversable<IsMaybe>)
 }

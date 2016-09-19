@@ -100,7 +100,10 @@ export function chain<L, A, B>(f: (a: A) => Either<L, B>, fa: Either<L, A>): Eit
 }
 
 export function alt<L, A>(fx: Either<L, A>, fy: Either<L, A>): Either<L, A> {
-  return prj(fx) instanceof Left ? fy : fx
+  if (prj(fx) instanceof Left) {
+    return fy
+  }
+  return fx
 }
 
 export function extend<L, A, B>(f: (ea: Either<L, A>) => B, ea: Either<L, A>): Either<L, B> {
@@ -115,12 +118,12 @@ export function reduce<L, A, B>(f: (a: A, b: B) => A, a: A, fb: Either<L, B>): A
   return f(a, b.value0)
 }
 
-export function sequence<L, F, A>(applicative: Applicative<F>, tfa: Either<L, HKT<F, A>>): HKT<F, Either<L, A>> {
-  const fa = prj(tfa)
-  if (fa instanceof Left) {
-    return applicative.of(unsafeCoerce(tfa))
+export function traverse<F, L, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<F, B>, ta: Either<L, A>): HKT<F, Either<L, B>> {
+  const a = prj(ta)
+  if (a instanceof Left) {
+    return applicative.of(unsafeCoerce(ta))
   }
-  return applicative.map(of, fa.value0)
+  return applicative.map(of, f(a.value0))
 }
 
 export function getSemigroup<L, R>(semigroup: Semigroup<R>): Semigroup<Either<L, R>> {
@@ -170,7 +173,7 @@ if (false) { // eslint-disable-line
     alt,
     extend,
     reduce,
-    sequence
+    traverse
   }: Monad<EitherF> &
      Bifunctor<IsEither> &
      Alt<EitherF> &
