@@ -4,7 +4,7 @@ import type { Semigroupoid } from './Semigroupoid'
 import type { Monoid } from './Monoid'
 
 export interface Category<C> extends Semigroupoid<C> {
-  id(): HKT2<C, any, any>
+  id<A>(): HKT2<C, A, A>
 }
 
 // the set of arrows from A to B
