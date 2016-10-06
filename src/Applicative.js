@@ -1,7 +1,5 @@
 // @flow
-import { HKT } from './HKT'
 import type { Apply } from './Apply'
+import type { Pointed } from './Pointed'
 
-export interface Applicative<F> extends Apply<F> {
-  of<A>(a: A): HKT<F, A>
-}
+export interface Applicative<F> extends Apply<F>, Pointed<F> {}

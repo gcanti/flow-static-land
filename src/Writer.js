@@ -74,6 +74,7 @@ export function tell<W>(w: W): Writer<W, void> {
   return inj(() => tuple.inj([undefined, w]))
 }
 
+// TODO: change to getMonad
 export function monadWriter<W>(monoid: Monoid<W>): Monad<HKT<IsWriter, W>> {
 
   function map<A, B>(f: (a: A) => B, fa: Writer<W, A>): Writer<W, B> {

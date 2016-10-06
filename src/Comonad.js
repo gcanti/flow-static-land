@@ -1,8 +1,5 @@
 // @flow
-import { HKT } from './HKT'
-import type { Functor } from './Functor'
 import type { Extend } from './Extend'
+import type { Copointed } from './Copointed'
 
-export interface Comonad<F> extends Functor<F>, Extend<F> {
-  extract<A>(ca: HKT<F, A>): A
-}
+export interface Comonad<F> extends Extend<F>, Copointed<F> {}

@@ -126,16 +126,20 @@ export function traverse<F, L, A, B>(applicative: Applicative<F>, f: (a: A) => H
   return applicative.map(of, f(a.value0))
 }
 
+export function concat<L, R>(semigroup: Semigroup<R>): (fx: Either<L, R>, fy: Either<L, R>) => Either<L, R> {
+  return function concat(fx, fy) {
+    const x = prj(fx)
+    const y = prj(fy)
+    if (x instanceof Right && y instanceof Right) {
+      return right(semigroup.concat(x.value0, y.value0))
+    }
+    return fx
+  }
+}
+
 export function getSemigroup<L, R>(semigroup: Semigroup<R>): Semigroup<Either<L, R>> {
   return {
-    concat(a, b) {
-      const av = prj(a)
-      const bv = prj(b)
-      if (av instanceof Right && bv instanceof Right) {
-        return right(semigroup.concat(av.value0, bv.value0))
-      }
-      return a
-    }
+    concat: concat(semigroup)
   }
 }
 

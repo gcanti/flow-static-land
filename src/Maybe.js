@@ -41,26 +41,30 @@ export function empty<A>(): Maybe<A> {
 
 export const pempty = empty
 
+export function concat<A>(semigroup: Semigroup<A>): (fx: Maybe<A>, fy: Maybe<A>) => Maybe<A> {
+  return function concat(fx, fy) {
+    const x = prj(fx)
+    const y = prj(fy)
+    if (x == null) {
+      return fy
+    }
+    if (y == null) {
+      return fx
+    }
+    return of(semigroup.concat(x, y))
+  }
+}
+
 export function getSemigroup<A>(semigroup: Semigroup<A>): Semigroup<Maybe<A>> {
   return {
-    concat(fx, fy) {
-      const x = prj(fx)
-      const y = prj(fy)
-      if (x == null) {
-        return fy
-      }
-      if (y == null) {
-        return fx
-      }
-      return of(semigroup.concat(x, y))
-    }
+    concat: concat(semigroup)
   }
 }
 
 export function getMonoid<A>(semigroup: Semigroup<A>): Monoid<Maybe<A>> {
   return {
     empty,
-    concat: getSemigroup(semigroup).concat
+    concat: concat(semigroup)
   }
 }
 
