@@ -66,7 +66,7 @@ npm install flow-static-land --save
 
 Babel config
 
-```
+```json
 {
   "presets": ["es2015"],
   "plugins" : [
