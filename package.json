@@ -1,6 +1,6 @@
 {
   "name": "flow-static-land",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Implementation of common algebraic types in JavaScript + Flow",
   "files": [
     "lib",
@@ -10,7 +10,7 @@
     "dev": "webpack --config=dev/webpack.config.js --watch --progress",
     "lint": "eslint src test",
     "test": "mocha --compilers js:babel-register",
-    "build": "rm -rf lib/* && babel src -d lib && flow-copy-source -v src lib"
+    "build": "npm run lint && rm -rf lib/* && babel src -d lib && flow-copy-source -v src lib"
   },
   "repository": {
     "type": "git",

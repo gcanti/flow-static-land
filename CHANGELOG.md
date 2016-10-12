@@ -12,6 +12,12 @@
 **Note**: Gaps between patch versions are faulty/broken releases.
 **Note**: A feature tagged as Experimental is in a high state of flux, you're at risk of it changing without notice.
 
+## 0.2.2
+
+- **New Feature**
+  - add `Pointed` and `Copointed` type classes, fix #15 (@gcanti)
+  - expose `concat` APIs, fix #33 (@gcanti)
+
 ## 0.2.1
 
 - **New Feature**
