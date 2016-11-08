@@ -11,6 +11,11 @@ import type { Traversable } from './Traversable'
 import type { Alt } from './Alt'
 import type { Extend } from './Extend'
 import type { Comonad } from './Comonad'
+import type { ChainRec } from './ChainRec'
+import type { Either } from './Either'
+
+import { tailRec } from './ChainRec'
+import { compose } from './Fun'
 
 class IsIdentity {}
 
@@ -60,6 +65,10 @@ export function extend<A, B>(f: (ea: Identity<A>) => B, ea: Identity<A>): Identi
 
 export const extract = prj
 
+export function chainRec<A, B>(f: (a: A) => Identity<Either<A, B>>, a: A): B {
+  return tailRec(compose(extract, f), a)
+}
+
 export function getSetoid<A>(setoid: Setoid<A>): Setoid<Identity<A>> {
   return {
     equals(fx, fy) {
@@ -104,11 +113,13 @@ if (false) { // eslint-disable-line
     alt,
     traverse,
     extend,
-    extract
+    extract,
+    chainRec
   }: Monad<IsIdentity> &
      Foldable<IsIdentity> &
      Traversable<IsIdentity> &
      Alt<IsIdentity> &
      Extend<IsIdentity> &
-     Comonad<IsIdentity>)
+     Comonad<IsIdentity> &
+     ChainRec<IsIdentity>)
 }
