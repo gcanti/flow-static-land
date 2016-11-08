@@ -7,7 +7,7 @@ import { HKT } from './HKT'
 
   `Foldable` represents data structures which can be _folded_.
 
-  - `foldr` folds a structure from the right
+  - `foldr` folds a structure from the right (not implemented)
   - `foldl` folds a structure from the left
   - `foldMap` folds a structure by accumulating values in a `Monoid`
 

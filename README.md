@@ -6,6 +6,26 @@
 
 The idea (faking higher kinded types in Flow) is based on the paper [Lightweight higher-kinded polymorphism](https://www.cl.cam.ac.uk/~jdy22/papers/lightweight-higher-kinded-polymorphism.pdf) and [elm-brands](https://github.com/joneshf/elm-brands).
 
+- `Semigroup`
+- `Monoid`
+- `Functor`
+- `Applicative`
+- `Monad`
+- `Foldable`
+- `Traversable`
+- `ChainRec`
+- `Alternative`
+- `Eff`
+- `Arr`
+- `Maybe`
+- `Either`
+- `Task`
+- `State`
+- `Writer`
+- `Reader`
+
+and many more...
+
 # Example
 
 ```js
@@ -48,7 +68,6 @@ const f = (n) => n * 2
 - [Higher kinded types with Flow](https://medium.com/@gcanti/higher-kinded-types-in-flow-275b657992b7)
 - [Expressing side effects with the `Eff` monad](https://medium.com/@gcanti/the-eff-monad-implemented-in-flow-40803670c3eb)
 - [Phantom types with Flow](https://medium.com/@gcanti/phantom-types-with-flow-828aff73232b)
-- [Refinements with Flow](https://medium.com/@gcanti/refinements-with-flow-9c7eeae8478b)
 
 # More examples
 
