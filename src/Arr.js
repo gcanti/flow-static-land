@@ -64,8 +64,8 @@ export function chain<A, B>(f: (a: A) => Arr<B>, fa: Arr<A>): Arr<B> {
   return inj(prj(fa).reduce((acc, a) => acc.concat(prj(f(a))), []))
 }
 
-export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Arr<B>): A {
-  return prj(fb).reduce(f, a)
+export function reduce<A, B>(f: (b: B, a: A) => B, b: B, fa: Arr<A>): B {
+  return prj(fa).reduce(f, b)
 }
 
 export function traverse<F, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<F, B>, ta: Arr<A>): HKT<F, Arr<B>> {

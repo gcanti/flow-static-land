@@ -110,12 +110,12 @@ export function extend<L, A, B>(f: (ea: Either<L, A>) => B, ea: Either<L, A>): E
   return prj(ea) instanceof Left ? unsafeCoerce(ea) : right(f(ea))
 }
 
-export function reduce<L, A, B>(f: (a: A, b: B) => A, a: A, fb: Either<L, B>): A {
-  const b = prj(fb)
-  if (b instanceof Left) {
-    return a
+export function reduce<L, A, B>(f: (b: B, a: A) => B, b: B, fa: Either<L, A>): B {
+  const a = prj(fa)
+  if (a instanceof Left) {
+    return b
   }
-  return f(a, b.value0)
+  return f(b, a.value0)
 }
 
 export function traverse<F, L, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<F, B>, ta: Either<L, A>): HKT<F, Either<L, B>> {

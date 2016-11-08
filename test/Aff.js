@@ -40,9 +40,11 @@ function testAff(aff, expected) {
   const eff: Eff<{ err: EXCEPTION, console: CONSOLE }, Canceler<{}>> = runAff(e, s, aff)
   let actual = false
   const originalConsoleError = console.error // eslint-disable-line
+  // $ExpectError
   console.error = s => { actual = s } // eslint-disable-line
   runEff(eff)
   assert.strictEqual(actual, expected)
+  // $ExpectError
   console.error = originalConsoleError // eslint-disable-line
 }
 

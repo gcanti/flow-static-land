@@ -55,8 +55,8 @@ export function composeApplicative<F, G>(f: Applicative<F>, g: Applicative<G>): 
 
 export function composeFoldable<F1, F2>(f1: Foldable<F1>, f2: Foldable<F2>): Foldable<IsCompose<F1, F2>> {
 
-  function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: HKT<IsCompose<F1, F2>, B>): A {
-    return f1.reduce((a, gb) => f2.reduce(f, a, gb), a, prj(fb))
+  function reduce<A, B>(f: (b: B, a: A) => B, b: B, fa: HKT<IsCompose<F1, F2>, A>): B {
+    return f1.reduce((a, gb) => f2.reduce(f, a, gb), b, prj(fa))
   }
 
   return {

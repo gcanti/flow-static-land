@@ -88,9 +88,9 @@ export function chain<A, B>(f: (a: A) => Maybe<B>, fa: Maybe<A>): Maybe<B> {
 
 export const Nothing: Maybe<any> = inj(null)
 
-export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Maybe<B>): A {
-  const b = prj(fb)
-  return b == null ? a : f(a, b)
+export function reduce<A, B>(f: (b: B, a: A) => B, b: B, fa: Maybe<A>): B {
+  const a = prj(fa)
+  return a == null ? b : f(b, a)
 }
 
 export function alt<A>(fx: Maybe<A>, fy: Maybe<A>): Maybe<A> {

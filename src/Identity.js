@@ -47,8 +47,8 @@ export function chain<A, B>(f: (a: A) => Identity<B>, fa: Identity<A>): Identity
   return f(prj(fa))
 }
 
-export function reduce<A, B>(f: (a: A, b: B) => A, a: A, fb: Identity<B>): A {
-  return f(a, prj(fb))
+export function reduce<A, B>(f: (b: B, a: A) => B, b: B, fa: Identity<A>): B {
+  return f(b, prj(fa))
 }
 
 export function alt<A>(fx: Identity<A>, fy: Identity<A>): Identity<A> { // eslint-disable-line no-unused-vars
