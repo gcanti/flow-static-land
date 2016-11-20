@@ -53,7 +53,8 @@ export function map<A, B>(f: (a: A) => B, fa: Arr<A>): Arr<B> {
 }
 
 export function ap<A, B>(fab: Arr<(a: A) => B>, fa: Arr<A>): Arr<B> {
-  return inj(prj(fab).reduce((acc, f) => acc.concat(prj(fa).map(f)), []))
+  const a = prj(fa)
+  return inj(prj(fab).reduce((acc, f) => acc.concat(a.map(f)), []))
 }
 
 export function of<A>(a: A): Arr<A> {
