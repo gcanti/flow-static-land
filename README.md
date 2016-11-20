@@ -75,7 +75,6 @@ const f = (n) => n * 2
 
 - a Signal library ([purescript-signal](https://github.com/bodil/purescript-signal) porting)
 - a QuickCheck library ([purescript-quickcheck](https://github.com/purescript/purescript-quickcheck) partial porting)
-- a React library (experimental)
 
 # Setup
 
