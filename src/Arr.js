@@ -97,7 +97,7 @@ export function equals<A>(setoid: Setoid<A>, fx: Arr<A>, fy: Arr<A>): boolean {
   if (x.length !== y.length) {
     return false
   }
-  for (var i = 0, len = x.length; i < len; i++) {
+  for (let i = 0, len = x.length; i < len; i++) {
     if (!setoid.equals(x[i], y[i])) {
       return false
     }
