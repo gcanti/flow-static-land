@@ -6,11 +6,12 @@ import * as maybe from '../src/Maybe'
 import * as tuple from '../src/Tuple'
 
 export function evens(count: number): Arr<number> {
+  let i = count
   return arr.unfoldr(n => {
-    if (count <= 0) {
+    if (i <= 0) {
       return maybe.Nothing
     }
-    count--
+    i--
     return maybe.of(tuple.inj([n, n + 2]))
   }, 1)
 }

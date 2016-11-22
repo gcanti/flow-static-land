@@ -6,3 +6,4 @@
 
 [options]
 suppress_comment=\\(.\\|\n\\)*\\$ExpectError
+experimental.const_params=true

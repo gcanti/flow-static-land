@@ -72,21 +72,23 @@ export function on<A, B, C>(o: (x: B, y: B) => C, f: (a: A) => B): (x: A, y: A) 
 
 export function compose(...fns) { // eslint-disable-line no-redeclare
   const len = fns.length - 1
-  return result => {
+  return x => {
+    let y = x
     for (let i = len; i > -1; i--) {
-      result = fns[i].call(this, result)
+      y = fns[i].call(this, y)
     }
-    return result
+    return y
   }
 }
 
 export function pipe(...fns) { // eslint-disable-line no-redeclare
   const len = fns.length - 1
-  return result => {
+  return x => {
+    let y = x
     for (let i = 0; i <= len; i++) {
-      result = fns[i].call(this, result)
+      y = fns[i].call(this, y)
     }
-    return result
+    return y
   }
 }
 
