@@ -1,8 +1,16 @@
 // @flow
 import type { Semigroup } from './Semigroup'
+import { getProductSemigroup } from './Semigroup'
 
 export interface Monoid<A> extends Semigroup<A> {
   empty(): A
+}
+
+export function getProductMonoid<A, B>(amonoid: Monoid<A>, bmonoid: Monoid<B>): Monoid<[A, B]> {
+  return {
+    empty: () => [amonoid.empty(), bmonoid.empty()],
+    concat: getProductSemigroup(amonoid, bmonoid).concat
+  }
 }
 
 // Boolean monoid under conjunction

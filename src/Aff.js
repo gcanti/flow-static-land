@@ -99,9 +99,9 @@ export function chain<E1, E2, E: E1 & E2, A, B>(f: (a: A) => Aff<E1, B>, fa: Aff
     let isCanceled = false
     let requestCancel = false
     let onCanceler = () => {}
-    let canceler2 = null
+    let canceler2: ?Canceler<any> = null
 
-    const canceler1 = prj(fa)((v) => {
+    const canceler1: Canceler<E2> = prj(fa)(v => {
       if (requestCancel) {
         isCanceled = true
       } else {
@@ -110,7 +110,7 @@ export function chain<E1, E2, E: E1 & E2, A, B>(f: (a: A) => Aff<E1, B>, fa: Aff
       }
     }, error)
 
-    return e => {
+    return (e: Error): Aff<E, boolean> => {
       return inj((s, f) => {
         requestCancel = true
         if (canceler2 != null) {
@@ -120,7 +120,7 @@ export function chain<E1, E2, E: E1 & E2, A, B>(f: (a: A) => Aff<E1, B>, fa: Aff
             if (bool || isCanceled) {
               s(true)
             } else {
-              onCanceler = function(canceler) {
+              onCanceler = canceler => {
                 prj(canceler(e))(s, f)
               }
             }
