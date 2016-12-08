@@ -8,6 +8,7 @@ import type { Foldable } from './Foldable'
 import type { Applicative } from './Applicative'
 import type { Traversable } from './Traversable'
 import type { Semigroup } from './Semigroup'
+import type { MonadError } from './MonadError'
 
 import { HKT } from './HKT'
 import { unsafeCoerce } from './Unsafe'
@@ -124,6 +125,21 @@ export function traverse<F, L, A, B>(applicative: Applicative<F>, f: (a: A) => H
     return applicative.of(unsafeCoerce(ta))
   }
   return applicative.map(of, f(a.value0))
+}
+
+export function getMonadError<E>(): MonadError<E, HKT<IsEither, E>> {
+  return {
+    of,
+    map,
+    ap,
+    chain,
+    throwError<A>(e: E): Either<E, A> {
+      return left(e)
+    },
+    catchError<A>(ma: Either<E, A>, handler: (e: E) => Either<E, A>): Either<E, A> {
+      return either(handler, right, ma)
+    }
+  }
 }
 
 export function concat<L, R>(semigroup: Semigroup<R>): (fx: Either<L, R>, fy: Either<L, R>) => Either<L, R> {

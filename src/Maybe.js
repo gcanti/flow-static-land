@@ -11,6 +11,8 @@ import type { Alternative } from './Alternative'
 import type { Extend } from './Extend'
 import type { Setoid } from './Setoid'
 import type { Traversable } from './Traversable'
+import type { MonadError } from './MonadError'
+
 import { id } from './Identity'
 
 class IsMaybe {}
@@ -121,6 +123,15 @@ export function traverse<F, A, B>(applicative: Applicative<F>, f: (a: A) => HKT<
   return applicative.map(of, f(a))
 }
 
+export function throwError<A>(e: void): Maybe<A> { // eslint-disable-line no-unused-vars
+  return Nothing
+}
+
+export function catchError<A>(ma: Maybe<A>, handler: (e: void) => Maybe<A>): Maybe<A> {
+  const a = prj(ma)
+  return a == null ? handler() : ma
+}
+
 export function getSetoid<A>(setoid: Setoid<A>): Setoid<Maybe<A>> {
   return {
     equals(fx, fy) {
@@ -185,12 +196,15 @@ if (false) { // eslint-disable-line
     alt,
     pempty,
     extend,
-    traverse
+    traverse,
+    throwError,
+    catchError
   }: Monad<IsMaybe> &
      Foldable<IsMaybe> &
      Alt<IsMaybe> &
      Plus<IsMaybe> &
      Alternative<IsMaybe> &
      Extend<IsMaybe> &
-     Traversable<IsMaybe>)
+     Traversable<IsMaybe> &
+     MonadError<*, IsMaybe>)
 }
