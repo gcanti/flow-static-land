@@ -6,6 +6,11 @@ export interface Monoid<A> extends Semigroup<A> {
   empty(): A
 }
 
+// Fold a list using the monoid
+export function concatAll<A>(monoid: Monoid<A>, as: Array<A>): A {
+  return as.reduce(monoid.concat, monoid.empty())
+}
+
 export function getProductMonoid<A, B>(amonoid: Monoid<A>, bmonoid: Monoid<B>): Monoid<[A, B]> {
   return {
     empty: () => [amonoid.empty(), bmonoid.empty()],
@@ -40,4 +45,9 @@ export const product: Monoid<number> = {
 export const stringMonoid: Monoid<string> = {
   empty: () => '',
   concat: (x, y) => x + y
+}
+
+export const arrayMonoid: Monoid<Array<any>> = {
+  empty: () => [],
+  concat: (x, y) => x.concat(y)
 }

@@ -4,7 +4,7 @@ import type { Maybe } from './Maybe'
 
 import { arrayMonoid } from './Monoid'
 import { id } from './Identity'
-import { maybeFirstMonoid, of, Nothing } from './Maybe'
+import { first, of, Nothing } from './Maybe'
 
 export interface Fold<S, A> {
   /**
@@ -28,7 +28,7 @@ export function getAll<S, A>(fold: Fold<S, A>, s: S): Array<A> {
 
 /** find the first target of a [[Fold]] matching the predicate  */
 export function find<S, A>(fold: Fold<S, A>, p: (a: A) => boolean, s: S): Maybe<A> {
-  return fold.foldMap(maybeFirstMonoid, a => p(a) ? of(a) : Nothing, s)
+  return fold.foldMap(first, a => p(a) ? of(a) : Nothing, s)
 }
 
 /** get the first target of a [[Fold]] */

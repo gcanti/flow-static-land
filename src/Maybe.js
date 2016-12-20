@@ -156,6 +156,12 @@ export function fromJust<A>(fa: Maybe<A>): A {
   return a
 }
 
+// Maybe monoid returning the leftmost non-Nothing value.
+export const first: Monoid<Maybe<any>> = {
+  empty,
+  concat: alt
+}
+
 /*
 
   Do notation (experimental)

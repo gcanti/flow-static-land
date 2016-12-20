@@ -7,7 +7,7 @@ import assert from 'assert'
 import type { Fold } from '../src/Fold'
 import type { Monoid } from '../src/Monoid'
 import {
-  fold as monoidFold,
+  concatAll,
   stringMonoid
 } from '../src/Monoid'
 import {
@@ -19,7 +19,7 @@ import {
 
 const f: Fold<string, string> = {
   foldMap<M>(monoid: Monoid<M>, f: (s: string) => M, s: string): M {
-    return monoidFold(monoid, s.split('').slice(0, 2).map(f))
+    return concatAll(monoid, s.split('').slice(0, 2).map(f))
   }
 }
 
