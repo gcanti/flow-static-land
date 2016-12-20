@@ -12,6 +12,19 @@
 **Note**: Gaps between patch versions are faulty/broken releases.
 **Note**: A feature tagged as Experimental is in a high state of flux, you're at risk of it changing without notice.
 
+## 0.2.4
+
+- **New Feature**
+  - IO monad (@gcanti)
+  - upgrade to flow v0.36, fix #45 (@gcanti)
+  - add MonadError (@gcanti)
+  - add Const (@gcanti)
+- **Polish**
+  - remove experimental React file (@gcanti)
+  - cache projection in `Arr.ap` (@gcanti)
+  - fix errors when experimental.const_params=true (@gcanti)
+  - ignore lib folder while flow-checking (@gcanti)
+
 ## 0.2.3
 
 - **New Feature**
