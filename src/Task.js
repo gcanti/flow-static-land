@@ -1,13 +1,13 @@
 // @flow
-import type { HKT2 } from '../src/HKT'
-import type { Monad } from '../src/Monad'
-import type { Eff } from '../src/Eff'
-import type { Either } from '../src/Either'
-import type { Monoid } from '../src/Monoid'
+import type { HKT2 } from './HKT'
+import type { Monad } from './Monad'
+import type { Eff } from './Eff'
+import type { Either } from './Either'
+import type { Monoid } from './Monoid'
 
-import { HKT } from '../src/HKT'
-import * as eff from '../src/Eff'
-import * as either from '../src/Either'
+import { HKT } from './HKT'
+import * as eff from './Eff'
+import * as either from './Either'
 
 class IsTask {}
 

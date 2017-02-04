@@ -13,6 +13,7 @@ import type { MonadError } from './MonadError'
 import { HKT } from './HKT'
 import { unsafeCoerce } from './Unsafe'
 import { Data1 } from './Data'
+import { id } from './Identity'
 
 class IsEither {}
 
@@ -80,6 +81,10 @@ export function bimap<A, B, C, D>(f: (a: A) => B, g: (c: C) => D, fac: Either<A,
     return left(f(ac.value0))
   }
   return right(g(ac.value0))
+}
+
+export function leftMap<L1, L2, R>(f: (l: L1) => L2, e: Either<L1, R>): Either<L2, R> {
+  return either.bimap(f, id, e)
 }
 
 export function ap<L, A, B>(fab: Either<L, (a: A) => B>, fa: Either<L, A>): Either<L, B> {

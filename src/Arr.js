@@ -12,6 +12,7 @@ import type { Ord } from './Ord'
 import type { Applicative } from './Applicative'
 import type { Traversable } from './Traversable'
 import type { Tuple } from './Tuple'
+import type { Unfoldable } from './Unfoldable'
 
 import { HKT } from './HKT'
 import * as maybe from './Maybe'
@@ -276,7 +277,8 @@ if (false) { // eslint-disable-line
     reduce,
     alt,
     pempty,
-    traverse
+    traverse,
+    unfoldr
   }:
      Monoid<Arr<*>> &
      FreeMonoid<*> &
@@ -285,5 +287,6 @@ if (false) { // eslint-disable-line
      Alt<IsArr> &
      Plus<IsArr> &
      Alternative<IsArr> &
-     Traversable<IsArr>)
+     Traversable<IsArr> &
+     Unfoldable<IsArr>)
 }

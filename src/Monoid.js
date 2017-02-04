@@ -18,6 +18,13 @@ export function getProductMonoid<A, B>(amonoid: Monoid<A>, bmonoid: Monoid<B>): 
   }
 }
 
+export function getDualMonoid<A>(monoid: Monoid<A>): Monoid<A> {
+  return {
+    empty: monoid.empty,
+    concat: (x, y) => monoid.concat(y, x)
+  }
+}
+
 // Boolean monoid under conjunction
 export const all: Monoid<boolean> = {
   empty: () => true,

@@ -14,6 +14,7 @@ import type { Traversable } from './Traversable'
 import type { MonadError } from './MonadError'
 
 import { id } from './Identity'
+import { constant } from './Fun'
 
 class IsMaybe {}
 
@@ -161,6 +162,8 @@ export const first: Monoid<Maybe<any>> = {
   empty,
   concat: alt
 }
+
+export const toNothing = constant(maybe.Nothing)
 
 /*
 

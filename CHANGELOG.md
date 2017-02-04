@@ -12,6 +12,13 @@
 **Note**: Gaps between patch versions are faulty/broken releases.
 **Note**: A feature tagged as Experimental is in a high state of flux, you're at risk of it changing without notice.
 
+## 0.2.5
+
+- **New Feature**
+  - add optics (Monocle partial porting) (@gcanti)
+- **Bug fix**
+  - bad import references on in /lib build, fix #52 [@gcanti]
+
 ## 0.2.4
 
 - **New Feature**
