@@ -65,8 +65,8 @@ export function extend<A, B>(f: (ea: Identity<A>) => B, ea: Identity<A>): Identi
 
 export const extract = prj
 
-export function chainRec<A, B>(f: (a: A) => Identity<Either<A, B>>, a: A): B {
-  return tailRec(compose(extract, f), a)
+export function chainRec<A, B>(f: (a: A) => Identity<Either<A, B>>, a: A): Identity<B> {
+  return inj(tailRec(compose(extract, f), a))
 }
 
 export function getSetoid<A>(setoid: Setoid<A>): Setoid<Identity<A>> {
