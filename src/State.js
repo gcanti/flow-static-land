@@ -48,7 +48,10 @@ export function execState<S, A>(sa: State<S, A>, s: S): S {
 }
 
 export function map<S, A, B>(f: (a: A) => B, fa: State<S, A>): State<S, B> {
-  return inj(s => tuple.inj([f(evalState(fa, s)), s]))
+  return inj(s => {
+    const t = runState(fa, s)
+    return tuple.inj([f(tuple.fst(t)), tuple.snd(t)])
+  })
 }
 
 export function ap<S, A, B>(fab: State<S, (a: A) => B>, fa: State<S, A>): State<S, B> {
@@ -60,7 +63,10 @@ export function of<S, A>(a: A): State<S, A> {
 }
 
 export function chain<S, A, B>(f: (a: A) => State<S, B>, fa: State<S, A>): State<S, B> {
-  return inj(s => prj(f(evalState(fa, s)))(s))
+  return inj(s => {
+    const t = runState(fa, s)
+    return runState(f(tuple.fst(t)), tuple.snd(t))
+  })
 }
 
 if (false) { // eslint-disable-line

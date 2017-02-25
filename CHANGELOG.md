@@ -12,6 +12,12 @@
 **Note**: Gaps between patch versions are faulty/broken releases.
 **Note**: A feature tagged as Experimental is in a high state of flux, you're at risk of it changing without notice.
 
+## 0.2.6
+
+- **Bug fix**
+  - fix `ChainRec` definition [@gcanti]
+  - fix `State` definition [@gcanti]
+
 ## 0.2.5
 
 - **New Feature**
