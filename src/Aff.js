@@ -98,7 +98,7 @@ export function chain<E1, E2, E: E1 & E2, A, B>(f: (a: A) => Aff<E1, B>, fa: Aff
   return inj((success, error) => {
     let isCanceled = false
     let requestCancel = false
-    let onCanceler = () => {}
+    let onCanceler = (canceler) => {} // eslint-disable-line no-unused-vars
     let canceler2: ?Canceler<any> = null
 
     const canceler1: Canceler<E2> = prj(fa)(v => {
