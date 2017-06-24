@@ -12,6 +12,11 @@
 **Note**: Gaps between patch versions are faulty/broken releases.
 **Note**: A feature tagged as Experimental is in a high state of flux, you're at risk of it changing without notice.
 
+## 0.2.7
+
+- **Bug Fix**
+  - Fix error due to increase in strictness of arity checking as of Flow v0.47.0 (@hallettj)
+
 ## 0.2.6
 
 - **Bug fix**
