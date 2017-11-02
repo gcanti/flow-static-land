@@ -16,11 +16,11 @@ export type Endomorphism<A> = Fn1<A, A>;
 declare function compose<A, B, C>(bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, C>; // eslint-disable-line no-redeclare
 declare function compose<A, B, C, D>(cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, D>; // eslint-disable-line no-redeclare
 declare function compose<A, B, C, D, E>(de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, E>; // eslint-disable-line no-redeclare
-declare function compose<A, B, C, D, E, F>(fe: Fn1<F, E>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, F>; // eslint-disable-line no-redeclare
-declare function compose<A, B, C, D, E, F, G>(fg: Fn1<F, G>, fe: Fn1<F, E>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, G>; // eslint-disable-line no-redeclare
-declare function compose<A, B, C, D, E, F, G, H>(fh: Fn1<F, H>, fg: Fn1<F, G>, fe: Fn1<F, E>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, H>; // eslint-disable-line no-redeclare
-declare function compose<A, B, C, D, E, F, G, H, I>(fi: Fn1<H, I>, fh: Fn1<F, H>, fg: Fn1<F, G>, fe: Fn1<F, E>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, I>; // eslint-disable-line no-redeclare
-declare function compose<A, B, C, D, E, F, G, H, I, J>(fj: Fn1<I, J>, fi: Fn1<H, I>, fh: Fn1<F, H>, fg: Fn1<F, G>, fe: Fn1<F, E>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, J>; // eslint-disable-line no-redeclare
+declare function compose<A, B, C, D, E, F>(fe: Fn1<E, F>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, F>; // eslint-disable-line no-redeclare
+declare function compose<A, B, C, D, E, F, G>(fg: Fn1<F, G>, fe: Fn1<E, F>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, G>; // eslint-disable-line no-redeclare
+declare function compose<A, B, C, D, E, F, G, H>(fh: Fn1<G, H>, fg: Fn1<F, G>, fe: Fn1<E, F>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, H>; // eslint-disable-line no-redeclare
+declare function compose<A, B, C, D, E, F, G, H, I>(fi: Fn1<H, I>, fh: Fn1<G, H>, fg: Fn1<F, G>, fe: Fn1<E, F>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, I>; // eslint-disable-line no-redeclare
+declare function compose<A, B, C, D, E, F, G, H, I, J>(fj: Fn1<I, J>, fi: Fn1<H, I>, fh: Fn1<G, H>, fg: Fn1<F, G>, fe: Fn1<E, F>, de: Fn1<D, E>, cd: Fn1<C, D>, bc: Fn1<B, C>, ab: Fn1<A, B>, ...rest: Array<void>): Fn1<A, J>; // eslint-disable-line no-redeclare
 
 declare function pipe<A, B, C>(ab: Fn1<A, B>, bc: Fn1<B, C>, ...rest: Array<void>): Fn1<A, C>; // eslint-disable-line no-redeclare
 declare function pipe<A, B, C, D>(ab: Fn1<A, B>, bc: Fn1<B, C>, cd: Fn1<C, D>, ...rest: Array<void>): Fn1<A, D>; // eslint-disable-line no-redeclare
